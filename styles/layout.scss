@@ -1,7 +1,39 @@
+.swiper-container {
+    position: static;
+    height: 100%;
+}
+
+.container-fluid {
+  padding: 0;
+  height: 100%;
+  margin-top: -50;
+}
+
+.navbar {
+  margin-bottom: 0;
+
+}
+
+ #fix-nav {
+    margin-right: 0;
+    margin-left: 0;
+}
+html { height: 100%;}
 body {
   background-color: #EEE;
-
+  height: 100%;
   h1 {
     color: #244751;
   }
+  .slide-1 {
+    background-color: red;
+  }
+  .slide-2 {
+    background-color: blue;
+  }
+  .slide-3 {
+    background-color: yellow;
+  }
+  
 }
+

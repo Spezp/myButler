@@ -2,16 +2,43 @@
 <html lang="en">
   <head>
     <title>Home Page</title>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/swiper.css"/>
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
-    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/vendor/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/scripts/swiper.js"></script>
   </head>
 
-  <body>
-    <h1>Hello World!</h1>
+    <body>
+      
+      <div class="container-fluid">
+        <% include partials/_nav %>
+        <div class="swiper-container">
+        <!-- Additional required wrapper -->
+          <div class="swiper-wrapper">
+          <!-- Slides -->
+            <div class="swiper-slide slide-2 slide-height">asdf</div>
+            <div class="swiper-slide slide-1 slide-height">Slide 1</div>
+            <div class="swiper-slide slide-3 slide-height">Slide 3</div>
+            <div class="swiper-slide slide-4 slide-height">Slide 3</div>
+          ...
+          </div>
+        <!-- If we need pagination -->
+        <div class="swiper-pagination"></div>
+
+        <!-- If we need navigation buttons -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+
+      </div>
+    </div>
   </body>
 </html>
