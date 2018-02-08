@@ -9,11 +9,14 @@ const bodyParser  = require("body-parser");
 const sass        = require("node-sass-middleware");
 const app         = express();
 const cookieSession     =require('cookie-session');
+const bcrypt      =require('bcrypt');
 
 const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
+const usersHelper = require('./server/lib/database_functions');
+
 
 // Seperated Routes for each Resource
 const userRoutes = require("./server/routes/users");
@@ -43,7 +46,7 @@ app.use(cookieSession({
 
 
 // Mount all users routes
-app.use("/user", userRoutes(knex));
+app.use("/user", userRoutes(usersHelper, bcrypt, session));
 
 //Mount all todos routes
 
