@@ -1,6 +1,7 @@
 .swiper-container {
     position: static;
     height: 100%;
+    padding-top: 50px;
 }
 
 .container-fluid {
@@ -11,6 +12,7 @@
 
 .navbar {
   margin-bottom: 0;
+  position: fixed;
 
 }
 
