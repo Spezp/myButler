@@ -3,3 +3,9 @@ public/styles
 .env
 *.log
 *.sqlite3
+createtable.sql
+inserttestdata.sql
+knexfile.js
+lookup_categories.js
+README.md
+settings.json
