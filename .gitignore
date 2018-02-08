@@ -9,3 +9,4 @@ lookup_categories.js
 README.md
 settings.json
 .gitignore
+.DS_Store
