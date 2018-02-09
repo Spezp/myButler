@@ -12,13 +12,15 @@
   "author": "Lighthouse Labs",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.15.2",
     "bootstrap": "^4.0.0",
+    "cookie-session": "^2.0.0-beta.3",
     "dotenv": "^2.0.0",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
     "jquery": "^3.3.1",
-    "knex": "^0.11.7",
+    "knex": "^0.14.3",
     "knex-logger": "^0.1.0",
     "morgan": "^1.7.0",
     "node-sass-middleware": "^0.9.8",
@@ -28,7 +30,6 @@
     "swiper": "^4.1.0"
   },
   "devDependencies": {
-    "nodemon": "^1.9.2",
-    "sqlite3": "^3.1.4"
+    "nodemon": "^1.14.12"
   }
 }
