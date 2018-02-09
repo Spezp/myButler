@@ -7,9 +7,11 @@ const ENV         = process.env.ENV || "development";
 const express     = require("express");
 const bodyParser  = require("body-parser");
 const sass        = require("node-sass-middleware");
-const app         = express();
 const cookieSession     =require('cookie-session');
-const bcrypt      =require('bcrypt');
+const bcrypt            =require('bcrypt');
+const methodOverride    =require('method-override');
+const app               = express();
+
 
 const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
@@ -20,6 +22,7 @@ const usersHelper = require('./server/lib/database_functions');
 
 // Seperated Routes for each Resource
 const userRoutes = require("./server/routes/users");
+const todoRoutes = require("./server.routes/todos");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -44,12 +47,14 @@ app.use(cookieSession({
   keys:['mySecretKey']
 }));
 
+app.use(methodOverride('_method'));
+
 
 // Mount all users routes
 app.use("/user", userRoutes(usersHelper, bcrypt, cookieSession));
 
 //Mount all todos routes
-
+app.use("/user/:user_id/todo", todoRoutes(dataHelpter));
 
 // Home page
 app.get("/", (req, res) => {
