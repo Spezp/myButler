@@ -60,7 +60,7 @@ app.use("/user/:user_id/todo", todoRoutes);
 
 // Home page
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("index.ejs");
 });
 
 app.listen(PORT, () => {
