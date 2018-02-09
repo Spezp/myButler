@@ -1,7 +1,8 @@
 "use strict";
 
-const express = require('express');
-const usersRoutes  = express.Router();
+// const usersHelper   = require('');
+const express       = require('express');
+const usersRoutes   = express.Router();
 
 
 
@@ -17,10 +18,11 @@ module.exports = (usersHelper, bcrypt, session) => {
     const hashedPassword = bcrypt.hashSync(req.query.password, 10);
     //assuming db will return the user row that just add in
     usersHelper.addUser(userName, hashedPassword, (row) => {
-      req.session.user_id =s row.user_id;
+      req.session.user_id =row.user_id;
       res.redirect(`/user/${row.user_id}`);
     // res.send(`from register route and query are ${req.query.userName}`);
     });
+  });
 
 
   //gather login info, compare with db
@@ -30,17 +32,18 @@ module.exports = (usersHelper, bcrypt, session) => {
   //TODO!! double check if get or post in finalized project
   usersRoutes.get('/login', (req, res) => {
     const userName = req.query.userName;
-    usersHelper.findUser(user, (row) => {
+    usersHelper.findUser(userName, (row) => {
       //assuming user has attribute named password
       const hashedPassword = row.password;
     });
-    if (bcrypt.hashSync(req.query.password) === hashedPassword) {
-    usersHelper.findUser(user, (row) => {
-      req.session.user_id = row.user_id;
-      res.redirect('/')
-    // res.send(`from login route and query are ${req.query.userName}`);
-
-    });
+    if (bcrypt.CompareSync(req.query.password) === hashedPassword) {
+      usersHelper.findUser(user, (row) => {
+        req.session.user_id = row.user_id;
+        res.redirect('/')
+      // res.send(`from login route and query are ${req.query.userName}`);
+      });
+    }
+  });
 
 
 
