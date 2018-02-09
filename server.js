@@ -46,7 +46,7 @@ app.use(cookieSession({
 
 
 // Mount all users routes
-app.use("/user", userRoutes(usersHelper, bcrypt, session));
+app.use("/user", userRoutes(usersHelper, bcrypt, cookieSession));
 
 //Mount all todos routes
 
