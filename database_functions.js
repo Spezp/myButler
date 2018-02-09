@@ -14,7 +14,7 @@ var knex = require('knex')({
 function getCategory(searchTerm, callback) {
   // when we figure out the API stuff, this will be here using the searchTerm, returning category
   let category = 'books';
-  knex.select('name', 'action')
+  knex.select('id', 'name', 'action')
   .from('categories')
   .where('name', 'like', `%${category}%`)
   .asCallback(function(err, rows) {
@@ -35,17 +35,35 @@ function getTodosAndCatgsByUserId(userId, callback) {
   });
 }
 
+function inserTodosByUserId(userId, todoName, callback) {
+  getCategory(todoName, (rows) => {
+    categoryId = rows[0].id;
+    console.log('categoryId in inserTodosByUserId: ', categoryId);  
+
+    knex('todos')
+    .insert({
+      item: `${todoName}`, 
+      user_id: `${userId}`, 
+      category_id: `${categoryId}`})
+    .asCallback(function(err) {
+        if (err) return console.error(err);
+        callback();
+    });
+  });
+}
+
+// this is just testing the function works - can get rid of when use function in another file
+// inserTodosByUserId(1, 'My Sister\'s Keeper', (categoryId) => {
+// });
+
 // this is just testing the function works - can get rid of when use function in another file
 // getCategory('books', (rows) => {
 //   console.log('rows returned: ', rows);  
 // });
 
-// this is just testing the function works - can get rid of when use function in another file
-getTodosAndCatgsByUserId(1, (rows) => {
-  console.log('rows returned: ', rows);  
-});
-
 exports.getCategory = getCategory;
+exports.getTodosAndCatgsByUserId = getTodosAndCatgsByUserId;
+exports.inserTodosByUserId = inserTodosByUserId;
 
 
 
