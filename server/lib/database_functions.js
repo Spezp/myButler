@@ -11,6 +11,7 @@ var knex = require('knex')({
   }
 });
 
+
 function getCategory(searchTerm, callback) {
   // when we figure out the API stuff, this will be here using the searchTerm, returning category
   let category = 'books';
@@ -38,12 +39,12 @@ function getTodosByCatgsByUserId(userId, categoryName, callback) {
 function inserTodosByUserId(userId, todoName, callback) {
   getCategory(todoName, (rows) => {
     categoryId = rows[0].id;
-    console.log('categoryId in inserTodosByUserId: ', categoryId);  
+    console.log('categoryId in inserTodosByUserId: ', categoryId);
 
     knex('todos')
     .insert({
-      item: `${todoName}`, 
-      user_id: `${userId}`, 
+      item: `${todoName}`,
+      user_id: `${userId}`,
       category_id: `${categoryId}`})
     .asCallback(function(err) {
         if (err) return console.error(err);
@@ -58,17 +59,43 @@ function inserTodosByUserId(userId, todoName, callback) {
 
 // this is just testing the function works - can get rid of when use function in another file
 // getCategory('books', (rows) => {
-//   console.log('rows returned: ', rows);  
+//   console.log('rows returned: ', rows);
 // });
 
 // this is just testing the function works - can get rid of when use function in another file
+<<<<<<< HEAD
 // getTodosByCatgsByUserId('1', 'books', (rows) => {
-//   console.log('rows returned: ', rows);  
+//   console.log('rows returned: ', rows);
 // });
 
 exports.getCategory = getCategory;
 exports.getTodosByCatgsByUserId = getTodosByCatgsByUserId;
 exports.inserTodosByUserId = inserTodosByUserId;
+=======
+getTodosAndCatgsByUserId(1, (rows) => {
+  console.log('rows returned: ', rows);
+});
+
+
+module.exports = function (knex) {
+
+  return {
+
+    getTodosByCatgsByUserId: function (userId, callback) {
+      // when we figure out the API stuff, this will be here using the searchTerm, returning category
+      knex('todos')
+      .join('categories', 'todos.category_id', '=', 'categories.id')
+      .select('todos.id', 'todos.item', 'categories.name', 'categories.action')
+      .where('user_id',`${userId}`)
+      .asCallback(function(err, rows) {
+          if (err) return console.error(err);
+          callback(rows);
+      });
+    }
+  }
+}
+
+>>>>>>> feature/todoRoutes
 
 
 
