@@ -3,8 +3,11 @@
   <head>
     <title>Home Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="/vendor/jquery.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
     crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Lily+Script+One" rel="stylesheet">
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
@@ -12,9 +15,6 @@
     <link rel="stylesheet" href="/styles/swiper.css"/>
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
-    <script type="text/javascript" src="/vendor/jquery.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-    crossorigin="anonymous"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="/scripts/swiper.js"></script>
   </head>
@@ -27,11 +27,12 @@
         <!-- Additional required wrapper -->
           <div class="swiper-wrapper">
           <!-- Slides -->
+            <div class="swiper-slide slide-5 slide-height"><% include partials/_auth %></div>
             <div class="swiper-slide slide-2 slide-height"><% include partials/_books %></div>
-            <div class="swiper-slide slide-1 slide-height">Slide 1</div>
-            <div class="swiper-slide slide-3 slide-height">Slide 3</div>
-            <div class="swiper-slide slide-4 slide-height">Slide 3</div>
-          ...
+            <div class="swiper-slide slide-1 slide-height"><% include partials/_products %></div>
+            <div class="swiper-slide slide-3 slide-height"><% include partials/_dining %></div>
+            <div class="swiper-slide slide-4 slide-height"><% include partials/_movies %></div>
+
           </div>
         <!-- If we need pagination -->
         <div class="swiper-pagination"></div>

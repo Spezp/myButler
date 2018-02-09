@@ -1,7 +1,7 @@
 .swiper-container {
   position: static;
   height: 100%;
-  padding-top: 50px;
+  padding-top: 87px;
 }
 
 .container-fluid {
@@ -10,14 +10,35 @@
   margin-top: -50;
 }
 
+.nav-av {
+  max-height: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 .navbar {
   margin-bottom: 0;
   position: fixed;
+  height: 50px;
+}
+
+.navbar-default {
+  width: 100%;
+  height: 87px;
+}
+
+.nav-row {
+  height: 50px;
+}
+
+.col-xs-4 {
+  text-align: center;
+  height: 50px;
 }
 
 h1 {
   font-family: 'Lily Script One', cursive;
-  font-size: 1em;
+  font-size: 1.5em;
 }
 
 #data-icon {
