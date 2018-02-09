@@ -28,8 +28,6 @@ module.exports = (dataHelper) => {
         overview.products = rows.length;
       });
       res.json(overview);
-      // console.log('this is from get overivew home page');
-      // res.send('this is from get overivew home page');
     }
   });
 
@@ -53,10 +51,7 @@ module.exports = (dataHelper) => {
         fullList = fullList.concat(rows);
       });
       res.json(fullList);
-      // console.log('this is from get fullList for swipes');
-      // res.send('this is from get fullList for swipes');
     }
-
   });
 
 

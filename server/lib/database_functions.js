@@ -63,39 +63,39 @@ function inserTodosByUserId(userId, todoName, callback) {
 // });
 
 // this is just testing the function works - can get rid of when use function in another file
-<<<<<<< HEAD
+
 // getTodosByCatgsByUserId('1', 'books', (rows) => {
 //   console.log('rows returned: ', rows);
 // });
 
-exports.getCategory = getCategory;
-exports.getTodosByCatgsByUserId = getTodosByCatgsByUserId;
-exports.inserTodosByUserId = inserTodosByUserId;
-=======
-getTodosAndCatgsByUserId(1, (rows) => {
-  console.log('rows returned: ', rows);
-});
+// exports.getCategory = getCategory;
+// exports.getTodosByCatgsByUserId = getTodosByCatgsByUserId;
+// exports.inserTodosByUserId = inserTodosByUserId;
+
+// getTodosAndCatgsByUserId(1, (rows) => {
+//   console.log('rows returned: ', rows);
+// });
 
 
 module.exports = function (knex) {
 
   return {
 
-    getTodosByCatgsByUserId: function (userId, callback) {
+    getTodosByCatgsByUserId: function (userId, categoryName, callback) {
       // when we figure out the API stuff, this will be here using the searchTerm, returning category
       knex('todos')
       .join('categories', 'todos.category_id', '=', 'categories.id')
       .select('todos.id', 'todos.item', 'categories.name', 'categories.action')
-      .where('user_id',`${userId}`)
+      .where('user_id',userId).andWhere('categories.name',categoryName)
       .asCallback(function(err, rows) {
           if (err) return console.error(err);
           callback(rows);
       });
     }
+
   }
 }
 
->>>>>>> feature/todoRoutes
 
 
 
