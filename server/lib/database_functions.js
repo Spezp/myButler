@@ -45,7 +45,10 @@ function inserTodosByUserId(userId, todoName, callback) {
     .insert({
       item: `${todoName}`,
       user_id: `${userId}`,
-      category_id: `${categoryId}`})
+      category_id: `${categoryId}`,
+      date_entered: knex.fn.now(),
+      completed: 'n'
+    })
     .asCallback(function(err) {
         if (err) return console.error(err);
         callback();
@@ -54,7 +57,7 @@ function inserTodosByUserId(userId, todoName, callback) {
 }
 
 // this is just testing the function works - can get rid of when use function in another file
-// inserTodosByUserId(1, 'My Sister\'s Keeper', (categoryId) => {
+// inserTodosByUserId(1, 'Never mind the buzzcocks', (categoryId) => {
 // });
 
 // this is just testing the function works - can get rid of when use function in another file
