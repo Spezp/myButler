@@ -16,6 +16,12 @@
 
 }
 
+#data-icon {
+  text-align: right;
+  a {
+    padding-left: 10px;
+  }
+}
  #fix-nav {
     margin-right: 0;
     margin-left: 0;
@@ -28,14 +34,18 @@ body {
     color: #244751;
   }
   .slide-1 {
-    background-color: red;
+    background-color: rgb(255, 255, 255);
   }
   .slide-2 {
-    background-color: blue;
+    background-color: rgb(255, 255, 255);
   }
   .slide-3 {
-    background-color: yellow;
+    background-color: rgb(255, 255, 255);
   }
   
 }
 
+.row{
+  width: 100%;
+  margin-left: 0;
+}

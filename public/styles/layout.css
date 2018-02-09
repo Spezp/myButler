@@ -15,6 +15,14 @@
   position: fixed;
 }
 
+#data-icon {
+  text-align: right;
+}
+
+#data-icon a {
+  padding-left: 10px;
+}
+
 #fix-nav {
   margin-right: 0;
   margin-left: 0;
@@ -34,13 +42,18 @@ body h1 {
 }
 
 body .slide-1 {
-  background-color: red;
+  background-color: white;
 }
 
 body .slide-2 {
-  background-color: blue;
+  background-color: white;
 }
 
 body .slide-3 {
-  background-color: yellow;
+  background-color: white;
+}
+
+.row {
+  width: 100%;
+  margin-left: 0;
 }
