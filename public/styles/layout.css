@@ -15,6 +15,11 @@
   position: fixed;
 }
 
+h1 {
+  font-family: 'Lily Script One', cursive;
+  font-size: 1em;
+}
+
 #data-icon {
   text-align: right;
 }
