@@ -63,6 +63,7 @@ $(document).ready(function () {
       `<div class="swiper-slide slide-5 slide-height"><% include partials/_movies %></div>`,
       `<div class="swiper-slide slide-6 slide-height"><% include partials/_products %></div>`
     ];
+    return template;
   };
 
   const renderTodos = (todos, newTodo) => {
@@ -125,7 +126,7 @@ $(document).ready(function () {
     loadTodos();
   });
   
-  const userAuthorized = function {
+  const userAuthorized = function() {
     mySwiper.removeSlide(0);
     mySwiper.appendSlide(`<div class="swiper-slide slide-2 slide-height"><% include partials/_overview %></div>`);
     mySwiper.update();
