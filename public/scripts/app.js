@@ -1,20 +1,37 @@
 $(document).ready(function () {
 
+  
   var mySwiper = new Swiper('.swiper-container', {
     // Optional parameters
     direction: 'horizontal',
-    loop: true,
+    loop: false,
     
     // If we need pagination
     pagination: {
-      el: '.swiper-pagination',
+      el: '.swiper-pagination'
     },
     
     // Navigation arrows
     navigation: {
       nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
+      prevEl: '.swiper-button-prev'
     }
+  });
+  $('#books-btn').click(function (event) {
+    event.preventDefault();
+    mySwiper.slideTo(2, 200);
+  });
+  $('#dining-btn').click( function ( event ) {
+    event.preventDefault();
+    mySwiper.slideTo(3, 400);
+  });
+  $('#movies-btn').click(function (event) {
+    event.preventDefault();
+    mySwiper.slideTo(4, 600);
+  });
+  $('#products-btn').click(function (event) {
+    event.preventDefault();
+    mySwiper.slideTo(5, 800);
   });
 /*
   $("#todo-textarea").keyup(function () {

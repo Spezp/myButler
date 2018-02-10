@@ -49,8 +49,23 @@ h2 {
 
 }
 
+p {
+  float: left;
+  margin-bottom: 0;
+}
+
+.badge-right {
+  padding-top: 5px;
+  margin-top: 2px;
+  float: right;
+}
+
 .padding-ten {
   padding-top: 15px;
+}
+
+.overview-btn {
+  margin: auto;
 }
 
 #data-icon {
