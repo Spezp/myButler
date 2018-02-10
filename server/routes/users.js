@@ -3,7 +3,7 @@
 const usersHelper   = require('../lib/usersHelper');
 const express       = require('express');
 const usersRoutes   = express.Router();
-const bcrypt        =require('bcrypt');
+const bcrypt        = require('bcrypt');
 
 
 
@@ -82,7 +82,11 @@ module.exports = (usersHelper, bcrypt, session) => {
   //delete in db ---deleteUser func
   //in callback, redirect to '/' ?
   usersRoutes.get('/delete', (req, res) => {
+    // const userId = {
+    //   id:req.body.id
+    // };
 
+    console.log('hit server');
   });
 
 

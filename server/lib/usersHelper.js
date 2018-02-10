@@ -37,8 +37,14 @@ module.exports = function (knex) {
 
     },
 
-    deleteUser: function(email, callback) {
-
+    deleteUser: function(userId, callback) {
+      knex('users')
+      .where('users.id', userId)
+      .del()
+      .asCallback(function(err) {
+          if (err) return console.error(err);
+          callback();
+      });
     }
 
 
