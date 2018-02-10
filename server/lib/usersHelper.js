@@ -24,7 +24,7 @@ module.exports = function (knex) {
     },
 
     findUser: function (email, callback) {
-      knex.select('id')
+      knex.select('id', 'password')
       .from('users')
       .where('email', 'like', email)
       .asCallback(function(err, rows) {

@@ -11,6 +11,7 @@ module.exports = (usersHelper, bcrypt, session) => {
 
   //update new user in db, send cookie
   //???redirect to which page?
+  //need to test user id
   usersRoutes.post("/register", (req, res) => {
     const newUser = {
       email:req.body.email,
@@ -18,7 +19,7 @@ module.exports = (usersHelper, bcrypt, session) => {
     };
     usersHelper.addUser(newUser,
       () => {usersHelper.findUser(req.body.email, (user) => {
-        req.session.user_id =user[0].user_id;
+        req.session.user_id =user[0].id;
         res.redirect('/user/1/todo/categories');
       })});
   });
@@ -26,17 +27,16 @@ module.exports = (usersHelper, bcrypt, session) => {
 
   //gather login info, compare with db
   //send session and redirect to home page
+  //need to test user id
   usersRoutes.post('/login', (req, res) => {
     usersHelper.findUser(req.body.email, (user) => {
-      //assuming user has attribute named password
-      const hashedPassword = user.password;
-      const user_id = user.id;
-    });
-    if (bcrypt.CompareSync(req.query.password) === hashedPassword) {
+      const user_id = user[0].id;
+      if (bcrypt.compareSync(req.body.password, user[0].password)) {
         req.session.user_id = user_id;
-        res.redirect('/')
-      // res.send(`from login route and query are ${req.query.userName}`);
+        res.redirect('/user/1/todo/categories');
       };
+    });
+
   });
 
 
