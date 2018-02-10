@@ -31,6 +31,16 @@ module.exports = function (knex) {
           if (err) return console.error(err);
           callback(rows);
       });
+    },
+
+    updateUser: function(email, callback) {
+
+    },
+
+    deleteUser: function(email, callback) {
+
     }
+
+
   }
 }
