@@ -11,31 +11,6 @@ var knex = require('knex')({
   }
 });
 
-
-// this is just testing the function works - can get rid of when use function in another file
-// inserTodosByUserId(1, 'Never mind the buzzcocks', (categoryId) => {
-// });
-
-// this is just testing the function works - can get rid of when use function in another file
-// getCategory('books', (rows) => {
-//   console.log('rows returned: ', rows);
-// });
-
-// this is just testing the function works - can get rid of when use function in another file
-
-// getTodosByCatgsByUserId('1', 'books', (rows) => {
-//   console.log('rows returned: ', rows);
-// });
-
-// exports.getCategory = getCategory;
-// exports.getTodosByCatgsByUserId = getTodosByCatgsByUserId;
-// exports.inserTodosByUserId = inserTodosByUserId;
-
-// getTodosAndCatgsByUserId(1, (rows) => {
-//   console.log('rows returned: ', rows);
-// });
-
-
 module.exports = function (knex) {
 
   return {
@@ -85,6 +60,30 @@ module.exports = function (knex) {
     } 
   }
 }
+
+
+// this is just testing the function works - can get rid of when use function in another file
+// inserTodosByUserId(1, 'Never mind the buzzcocks', (categoryId) => {
+// });
+
+// this is just testing the function works - can get rid of when use function in another file
+// getCategory('books', (rows) => {
+//   console.log('rows returned: ', rows);
+// });
+
+// this is just testing the function works - can get rid of when use function in another file
+
+// getTodosByCatgsByUserId('1', 'books', (rows) => {
+//   console.log('rows returned: ', rows);
+// });
+
+// exports.getCategory = getCategory;
+// exports.getTodosByCatgsByUserId = getTodosByCatgsByUserId;
+// exports.inserTodosByUserId = inserTodosByUserId;
+
+// getTodosAndCatgsByUserId(1, (rows) => {
+//   console.log('rows returned: ', rows);
+// });
 
 
 
