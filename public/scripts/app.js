@@ -44,48 +44,73 @@ $(document).ready(function () {
     if(!isContent.trim()){
       throw err;
     }
-    $.post("/user/:user_id/todo", $("#todo-textarea").serialize(), function () {
+    $.post("/todo", $("#todo-textarea").serialize(), function () {
       loadNewTodo();
     });
   });
 
   const createTodoElement = function (todoDB) {
 
-    let template = `<tr><td>${todoDB.user.text}</td><td></td><td id="data-icon"><i class="fas fa-pencil-alt"></i><a ><i class="far fa-trash-alt"></i></a></td></tr>`;
+    let template = `<tr data-id="${todoDB.id}"><td>${todoDB.item}</td><td></td><td id="data-icon"><i class="fas fa-pencil-alt"></i><a ><i class="far fa-trash-alt"></i></a></td></tr>`;
 
+    return template;
+  };
+
+  const createSlideElements = function() {
+    let template = [
+      `<div class="swiper-slide slide-3 slide-height"><% include partials/_books %></div>`,
+      `<div class="swiper-slide slide-4 slide-height"><% include partials/_dining %></div>`,
+      `<div class="swiper-slide slide-5 slide-height"><% include partials/_movies %></div>`,
+      `<div class="swiper-slide slide-6 slide-height"><% include partials/_products %></div>`
+    ];
     return template;
   };
 
   const renderTodos = (todos, newTodo) => {
     let contentAll = '';
 
+    if (!todos) {
+      return null;
+    }
+
+    mySwiper.appendSlide(createSlideElements());
+
     if (newTodo) {
-      $(createTodoElement(todos)).prependTo(`#${todos.user.category}`).hide().slideDown();
+      $(createTodoElement(todos)).prependTo(`#${todos.name}Table`).hide().slideDown();
     } else {
       todos.forEach(function (todo) {
-        $(createTodoElement(todo)).prependTo(`#${todos.user.category}`);
+        $(createTodoElement(todo)).prependTo(`#${todos.name}Table`);
       });
     }
+    mySwiper.update();
   };
 
   let loadNewTodo = () => {
-    $.getJSON("/user/:user_id/todo", (json) => {
+    $.getJSON("/todo", (json) => {
       renderTodos(json[json.length - 1], true);
     });
   };
 
   let loadTodos = () => {
-    $.getJSON("/user/:user_id/todo", (json) => {
+    $.getJSON("/todo/categories", (json) => {
+      console.log(json);
+      $(`#books-badge`).text(json.books);
+      $(`#dining-badge`).text(json.restaurants);
+      $(`#movies-badge`).text(json.movies);
+      $(`#products-badge`).text(json.products);
+    });
+    $.getJSON("/todo", (json) => {
+      console.log(json);
       renderTodos(json, false);
     });
   };
 
-  loadTodos();
+
 
 
   //??Can we change button name to btn-register??
   //??is it okay to remove slide-2 after login/register?
-  $('.btn-info').on('click', function(event){
+  $('#signup-btn').on('click', function(event){
     event.preventDefault();
     event.stopPropagation();
     const queryString = `email=${$('#input-email').val()}&password=${$('#input-password').val()}`;
@@ -93,13 +118,24 @@ $(document).ready(function () {
       url: '/user/register',
       method: 'POST',
       data: queryString
-    }).done(function(){
-      $('.slide-2').remove();
+    }).done(function(response){
+      if(!response.isUser) {
+        userAuthorized();
+      } else {
+        $(".warning").hide().slideDown();
+      }
     });
+    loadTodos();
   });
 
+  const userAuthorized = function() {
+    mySwiper.removeSlide(0);
+    mySwiper.appendSlide(`<div class="swiper-slide slide-2 slide-height"><% include partials/_overview %></div>`);
+    mySwiper.update();
+    mySwiper.slideTo(1, 200);
+  }
   //??change to btn-login?
-  $('.btn-success').on('click', function(event){
+  $('#login-btn').on('click', function(event){
     event.preventDefault();
     event.stopPropagation();
     const queryString = `email=${$('#input-email').val()}&password=${$('#input-password').val()}`;
@@ -107,9 +143,15 @@ $(document).ready(function () {
       url: '/user/login',
       method: 'POST',
       data: queryString
-    }).done(function(){
-      $('.slide-2').remove();
+    }).done(function(response){
+      // response.email to navbar
+      if(response.auth){
+        userAuthorized();
+      } else {
+        $(".warning").hide().slideDown();
+      }
     });
+    loadTodos();
   });
 
 });

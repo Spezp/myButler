@@ -56,7 +56,7 @@ app.use(methodOverride('_method'));
 app.use("/user", usersRoutes);
 
 //Mount all todos routes
-app.use("/user/:user_id/todo", todoRoutes);
+app.use("/todo", todoRoutes);
 
 // Home page
 app.get("/", (req, res) => {
