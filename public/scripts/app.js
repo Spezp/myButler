@@ -1,26 +1,43 @@
 $(document).ready(function () {
 
+
   var mySwiper = new Swiper('.swiper-container', {
     // Optional parameters
     direction: 'horizontal',
-    loop: true,
-    
+    loop: false,
+
     // If we need pagination
     pagination: {
-      el: '.swiper-pagination',
+      el: '.swiper-pagination'
     },
-    
+
     // Navigation arrows
     navigation: {
       nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
+      prevEl: '.swiper-button-prev'
     }
+  });
+  $('#books-btn').click(function (event) {
+    event.preventDefault();
+    mySwiper.slideTo(2, 200);
+  });
+  $('#dining-btn').click( function ( event ) {
+    event.preventDefault();
+    mySwiper.slideTo(3, 400);
+  });
+  $('#movies-btn').click(function (event) {
+    event.preventDefault();
+    mySwiper.slideTo(4, 600);
+  });
+  $('#products-btn').click(function (event) {
+    event.preventDefault();
+    mySwiper.slideTo(5, 800);
   });
 /*
   $("#todo-textarea").keyup(function () {
     let count = this.value.length;
   });
-  
+
   $("#post-todo").click( function( event ) {
     event.preventDefault();
     let isContent = $("#todo-textarea").val();
@@ -62,7 +79,22 @@ $(document).ready(function () {
       renderTodos(json, false);
     });
   };
-  
+
   loadTodos();
   */
+
+  //??Can we change button name to btn-register??
+  //??is it okay to remove slide-2 after login/register?
+  $('.btn-info').on('click', function(event){
+    event.preventDefault();
+    event.stopPropagation();
+    const queryString = `email=${$('#input-email').val()}&password=${$('#input-password').val()}`;
+    $.ajax({
+      url: '/user/register',
+      method: 'POST',
+      data: queryString
+    }).done(function(){
+      $('.slide-2').remove();
+    });
+  });
 });

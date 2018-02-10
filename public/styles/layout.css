@@ -41,6 +41,33 @@ h1 {
   font-size: 1.5em;
 }
 
+h2 {
+  font-size: 3em;
+  font-family: 'Lily Script One',cursive;
+  margin: 50px 0;
+  color: #4b5573;
+  text-align: center;
+}
+
+p {
+  float: left;
+  margin-bottom: 0;
+}
+
+.badge-right {
+  padding-top: 5px;
+  margin-top: 2px;
+  float: right;
+}
+
+.padding-ten {
+  padding-top: 15px;
+}
+
+.overview-btn {
+  margin: auto;
+}
+
 #data-icon {
   text-align: right;
 }
