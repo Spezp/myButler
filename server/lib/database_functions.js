@@ -66,8 +66,6 @@ module.exports = function (knex) {
         });
       });
     },
-<<<<<<< HEAD
-=======
     
     deleteIndividTodo: function(todoId, callback) {
       knex('todos')
@@ -78,7 +76,6 @@ module.exports = function (knex) {
           callback();
       });
     },
->>>>>>> database/getIndividTodo
 
     // expected arguments: todoId; itemChange as text or null; catagChange as text or null
     // completed as 't' or null; callback.
