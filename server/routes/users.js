@@ -24,11 +24,12 @@ bk
         usersHelper.addUser(newUser, () => {
           usersHelper.findUser(newUser.email, (user) => {
             req.session.user_id =user[0].id;
+            const email = user[0].email;
             res.json({isUser: false, email: email});
           });
         });
       }
-    }
+    });
   });
 
 
@@ -37,13 +38,17 @@ bk
   //need to test user id
   usersRoutes.post('/login', (req, res) => {
     usersHelper.findUser(req.body.email, (user) => {
-      const user_id = user[0].id;
-      const email = user[0].id;
-      if (bcrypt.compareSync(req.body.password, user[0].password)) {
-        req.session.user_id = user_id;
-        res.json({auth: true, email: email});
+      if(!user.length) {
+        const user_id = user[0].id;
+        const email = user[0].id;
+        if (bcrypt.compareSync(req.body.password, user[0].password)) {
+          req.session.user_id = user_id;
+          res.json({auth: true, email: email});
+        } else {
+          res.json({auth: false});
+        }
       } else {
-        res.json({auth: false});
+      res.json({isRegistered: false});
       }
     });
   });
