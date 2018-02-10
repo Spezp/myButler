@@ -12,6 +12,7 @@ module.exports = (usersHelper, bcrypt, session) => {
   //update new user in db, send cookie
   //???redirect to which page?
   //need to test user id
+  //need :user_id in route?? already have cookie. REST??
   usersRoutes.post("/register", (req, res) => {
     const newUser = {
       email:req.body.email,
@@ -20,7 +21,7 @@ module.exports = (usersHelper, bcrypt, session) => {
     usersHelper.addUser(newUser,
       () => {usersHelper.findUser(req.body.email, (user) => {
         req.session.user_id =user[0].id;
-        res.redirect('/user/1/todo/categories');
+        res.redirect(`/user/${user[0].id}/todo/categories`);
       })});
   });
 
@@ -33,12 +34,39 @@ module.exports = (usersHelper, bcrypt, session) => {
       const user_id = user[0].id;
       if (bcrypt.compareSync(req.body.password, user[0].password)) {
         req.session.user_id = user_id;
-        res.redirect('/user/1/todo/categories');
+        res.redirect(`/user/${user[0].id}/todo/categories`);
       };
     });
 
   });
 
+  //is the redirection correct?
+  usersRoutes.post('/logout', (req, res) => {
+    req.session = null;
+    res.redirect('/');
+  });
+
+  //request will be from avatar btn event listener through ajax
+  //find user in db, in callback, do below
+  //response with user's email, avatar, and potentially other info like profile name to be add in the future
+  //front-end: will display info in form, placeholder are the info, edit and delet btn,
+  usersRoutes.get('/:user_id', (req, res) => {
+
+  });
+
+  //triggered by edit btn and send request through ajax
+  //update in db ---updateUser func
+  //in callback, redirect to route above
+  usersRoutes.put('/:user_id', (req, res) => {
+
+  });
+
+  //triggered by delete btn and send request through ajax
+  //delete in db ---deleteUser func
+  //in callback, redirect to '/' ?
+  usersRoutes.get('/delete', (req, res) => {
+
+  });
 
 
   return usersRoutes;

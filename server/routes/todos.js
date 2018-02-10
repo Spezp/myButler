@@ -72,12 +72,17 @@ module.exports = (dataHelper) => {
 
   });
 
+  //icon view detais??
+  todoRoutes.get('/:item', (req, res) => {
+    // AAAAAPPPPPIIIII
+  })
 
-
+  //icon edit item??
   todoRoutes.put('/:item', (req, res) => {
 
   });
 
+  //delete icon??
   todoRoutes.delete('/:item', (req, res) => {
 
   });
