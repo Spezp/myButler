@@ -63,6 +63,15 @@ app.get("/", (req, res) => {
   res.render("index.ejs");
 });
 
+app.get('/test', (req, res) => {
+  // run http://localhost:8080/user/1/todo/test  in browser!
+  dataHelper.getTodosByCatgsByUserId(4, 'books', (rows) => {
+    // res.send('deleted');
+    res.json(rows);
+    // callback(row);
+  });
+});
+
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
