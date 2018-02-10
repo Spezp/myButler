@@ -58,10 +58,10 @@ $(document).ready(function () {
 
   const createSlideElements = function() {
     let template = [
-      `<div class="swiper-slide slide-3 slide-height"><% include partials/_books %></div>`,
-      `<div class="swiper-slide slide-4 slide-height"><% include partials/_dining %></div>`,
-      `<div class="swiper-slide slide-5 slide-height"><% include partials/_movies %></div>`,
-      `<div class="swiper-slide slide-6 slide-height"><% include partials/_products %></div>`
+      `<div class="swiper-slide slide-3 slide-height"><%= include partials/_books %></div>`,
+      `<div class="swiper-slide slide-4 slide-height"><%= include partials/_dining %></div>`,
+      `<div class="swiper-slide slide-5 slide-height"><%= include partials/_movies %></div>`,
+      `<div class="swiper-slide slide-6 slide-height"><%= include partials/_products %></div>`
     ];
     return template;
   };
@@ -74,6 +74,7 @@ $(document).ready(function () {
     }
 
     mySwiper.appendSlide(createSlideElements());
+    mySwiper.update();
 
     if (newTodo) {
       $(createTodoElement(todos)).prependTo(`#${todos.name}Table`).hide().slideDown();
