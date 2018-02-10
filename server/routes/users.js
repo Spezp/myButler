@@ -3,9 +3,7 @@
 const usersHelper   = require('../lib/usersHelper');
 const express       = require('express');
 const usersRoutes   = express.Router();
-const bcrypt        =require('bcrypt');
-
-
+const bcrypt        = require('bcrypt');
 
 module.exports = (usersHelper, bcrypt, session) => {
 
@@ -23,13 +21,13 @@ module.exports = (usersHelper, bcrypt, session) => {
     //if yes, res.json({isUser: true})
     usersHelper.findUser(newUser.email, (user) => {
       if (!user) {
-        res.json({isUser: true});
+        res.json({isRegistered: true});
       } else {
         usersHelper.addUser(newUser, () => {
           usersHelper.findUser(newUser.email, (user) => {
-            req.session.user_id = user[0].id;
+            req.session.user_id =user[0].id;
             const email = user[0].email;
-            res.json({isUser: false, email: email});
+            res.json({isRegistered: false, email: email});
           });
         });
       }
@@ -42,13 +40,17 @@ module.exports = (usersHelper, bcrypt, session) => {
   //need to test user id
   usersRoutes.post('/login', (req, res) => {
     usersHelper.findUser(req.body.email, (user) => {
-      const user_id = user[0].id;
-      const email = user[0].id;
-      if (bcrypt.compareSync(req.body.password, user[0].password)) {
-        req.session.user_id = user_id;
-        res.json({auth: true, email: email});
+      if(user.length) {
+        const user_id = user[0].id;
+        const email = user[0].email;
+        if (bcrypt.compareSync(req.body.password, user[0].password)) {
+          req.session.user_id = user_id;
+          res.json({auth: true, email: email});
+        } else {
+          res.json({auth: false});
+        }
       } else {
-        res.json({auth: false});
+      res.json({isRegistered: false});
       }
     });
   });
@@ -78,7 +80,11 @@ module.exports = (usersHelper, bcrypt, session) => {
   //delete in db ---deleteUser func
   //in callback, redirect to '/' ?
   usersRoutes.get('/delete', (req, res) => {
+    // const userId = {
+    //   id:req.body.id
+    // };
 
+    console.log('hit server');
   });
 
 

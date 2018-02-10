@@ -44,7 +44,7 @@ $(document).ready(function () {
     if(!isContent.trim()){
       throw err;
     }
-    $.post("/user/:user_id/todo", $("#todo-textarea").serialize(), function () {
+    $.post("/todo", $("#todo-textarea").serialize(), function () {
       loadNewTodo();
     });
   });
@@ -87,19 +87,21 @@ $(document).ready(function () {
   };
 
   let loadNewTodo = () => {
-    $.getJSON("/user/:user_id/todo", (json) => {
+    $.getJSON("/todo", (json) => {
       renderTodos(json[json.length - 1], true);
     });
   };
 
   let loadTodos = () => {
-    $.getJSON("/user/categories", (json) => {
+    $.getJSON("/todo/categories", (json) => {
+      console.log(json);
       $(`#books-badge`).text(json.books);
       $(`#dining-badge`).text(json.restaurants);
       $(`#movies-badge`).text(json.movies);
       $(`#products-badge`).text(json.products);
     });
-    $.getJSON("/user/:user_id/todo", (json) => {
+    $.getJSON("/todo", (json) => {
+      console.log(json);
       renderTodos(json, false);
     });
   };
@@ -126,7 +128,7 @@ $(document).ready(function () {
     });
     loadTodos();
   });
-  
+
   const userAuthorized = function() {
     mySwiper.removeSlide(0);
     mySwiper.appendSlide(`<div class="swiper-slide slide-2 slide-height"><% include partials/_overview %></div>`);
@@ -137,6 +139,7 @@ $(document).ready(function () {
   $('#login-btn').on('click', function(event){
     event.preventDefault();
     event.stopPropagation();
+    console.log('clicked login');
     const queryString = `email=${$('#input-email').val()}&password=${$('#input-password').val()}`;
     $.ajax({
       url: '/user/login',

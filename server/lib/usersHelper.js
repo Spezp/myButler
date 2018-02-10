@@ -24,7 +24,7 @@ module.exports = function (knex) {
     },
 
     findUser: function (email, callback) {
-      knex.select('id', 'password')
+      knex.select('id', 'password', 'email')
         .from('users')
         .where('email', 'like', email)
         .asCallback(function(err, rows) {
@@ -37,8 +37,14 @@ module.exports = function (knex) {
 
     },
 
-    deleteUser: function(email, callback) {
-
+    deleteUser: function(userId, callback) {
+      knex('users')
+      .where('users.id', userId)
+      .del()
+      .asCallback(function(err) {
+          if (err) return console.error(err);
+          callback();
+      });
     }
 
 

@@ -56,11 +56,20 @@ app.use(methodOverride('_method'));
 app.use("/user", usersRoutes);
 
 //Mount all todos routes
-app.use("/user/:user_id/todo", todoRoutes);
+app.use("/todo", todoRoutes);
 
 // Home page
 app.get("/", (req, res) => {
   res.render("index.ejs");
+});
+
+app.get('/test', (req, res) => {
+  // run http://localhost:8080/user/1/todo/test  in browser!
+  dataHelper.getTodosByCatgsByUserId(4, 'books', (rows) => {
+    // res.send('deleted');
+    res.json(rows);
+    // callback(row);
+  });
 });
 
 app.listen(PORT, () => {
