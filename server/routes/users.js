@@ -5,7 +5,9 @@ const express       = require('express');
 const usersRoutes   = express.Router();
 const bcrypt        =require('bcrypt');
 
-bk
+module.exports = (usersHelper, bcrypt, session) => {
+
+  //update new user in db, send cookie
   //???redirect to which page?
   //need to test user id
   //need :user_id in route?? already have cookie. REST??
