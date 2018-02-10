@@ -65,16 +65,16 @@ module.exports = (usersHelper, bcrypt, session) => {
   //find user in db, in callback, do below
   //response with user's email, avatar, and potentially other info like profile name to be add in the future
   //front-end: will display info in form, placeholder are the info, edit and delet btn,
-  usersRoutes.get('/:user_id', (req, res) => {
+  // usersRoutes.get('/:user_id', (req, res) => {
 
-  });
+  // });
 
-  //triggered by edit btn and send request through ajax
-  //update in db ---updateUser func
-  //in callback, redirect to route above
-  usersRoutes.put('/:user_id', (req, res) => {
+  // //triggered by edit btn and send request through ajax
+  // //update in db ---updateUser func
+  // //in callback, redirect to route above
+  // usersRoutes.put('/:user_id', (req, res) => {
 
-  });
+  // });
 
   //triggered by delete btn and send request through ajax
   //delete in db ---deleteUser func
@@ -83,10 +83,12 @@ module.exports = (usersHelper, bcrypt, session) => {
     // const userId = {
     //   id:req.body.id
     // };
-
-    console.log('hit server');
+    const userId = 1;
+    // TODO:  this is a hardcoded userId as we are not passing it into the route just yet - needs to be changed.
+    if (userId) {
+      usersHelper.deleteUser(userId, () => {});
+    }
   });
-
 
   return usersRoutes;
 };
