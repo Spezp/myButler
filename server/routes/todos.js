@@ -11,13 +11,12 @@ module.exports = (dataHelper) => {
   //if not log in, AJAX in app.js will receive a false value and create a flash message key = msg, value see below
   //if log in, AJAX in app.js will receive json with key = category, value = number of items
   todoRoutes.get('/categories', (req, res) => {
-    if (!req.session.user_id){
+    if (false){
       res.json({login: false, msg:'Please log in'});
     } else {
       const overview = {};
       // const user_id = req.session.user_id;
-      // const user_id = 1;
-      const user_id = req.session.user_id;
+      const user_id = 1;
       dataHelper.getTodosByCatgsByUserId(user_id, "movies", (rows) => {
         overview.movies = rows.length;
         dataHelper.getTodosByCatgsByUserId(user_id, "restaurants", (rows) => {
@@ -39,12 +38,11 @@ module.exports = (dataHelper) => {
 
   //display all items in four categories for swipes
   todoRoutes.get('/', (req, res) => {
-     if (!req.session.user_id){
+     if (false){
       res.json({login: false, msg:'Please log in'});
     } else {
       let fullList = [];
-      // const user_id = 1;
-      const user_id = req.session.user_id;
+      const user_id = 1;
       dataHelper.getTodosByCatgsByUserId(user_id, "movies", (rows) => {
         fullList = rows;
         dataHelper.getTodosByCatgsByUserId(user_id, "restaurants", (rows) => {
@@ -74,26 +72,21 @@ module.exports = (dataHelper) => {
 
   });
 
-  //icon view detais??
-  todoRoutes.get('/:item', (req, res) => {
-    // AAAAAPPPPPIIIII
-  })
 
-  //icon edit item??
+
   todoRoutes.put('/:item', (req, res) => {
 
   });
 
-  //delete icon??
   todoRoutes.delete('/:item', (req, res) => {
 
   });
 
   todoRoutes.get('/test', (req, res) => {
     // run http://localhost:8080/user/1/todo/test  in browser!
-    dataHelper.getIndividTodo(20, (row) => {
-      console.log(row);
-      // callback(row);
+    console.log('hit route');
+    dataHelper.deleteIndividTodo(150, () => {
+      res.send('deleted');
     });
   });
 

@@ -37,7 +37,6 @@ module.exports = function (knex) {
       });
     },
 
-
     getCategory: function(searchTerm, callback) {
       // when we figure out the API stuff, this will be here using the searchTerm, returning category
       let category = 'books';
@@ -67,6 +66,19 @@ module.exports = function (knex) {
         });
       });
     },
+<<<<<<< HEAD
+=======
+    
+    deleteIndividTodo: function(todoId, callback) {
+      knex('todos')
+      .where('todos.id', todoId)
+      .del()
+      .asCallback(function(err) {
+          if (err) return console.error(err);
+          callback();
+      });
+    },
+>>>>>>> database/getIndividTodo
 
     // expected arguments: todoId; itemChange as text or null; catagChange as text or null
     // completed as 't' or null; callback.
