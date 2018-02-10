@@ -56,25 +56,22 @@ $(document).ready(function () {
     return template;
   };
 
-  const createSlideElements = function() {
-    let template = [
-      `<div class="swiper-slide slide-3 slide-height"><%= include partials/_books %></div>`,
-      `<div class="swiper-slide slide-4 slide-height"><%= include partials/_dining %></div>`,
-      `<div class="swiper-slide slide-5 slide-height"><%= include partials/_movies %></div>`,
-      `<div class="swiper-slide slide-6 slide-height"><%= include partials/_products %></div>`
-    ];
-    return template;
-  };
-
   const renderTodos = (todos, newTodo) => {
     let contentAll = '';
 
     if (!todos) {
       return null;
     }
-
-    mySwiper.appendSlide(createSlideElements());
-    mySwiper.update();
+    $(".slide-2")
+      .attr("style", "display: inline");
+    $(".slide-3")
+      .attr("style", "display: inline");
+    $(".slide-4")
+      .attr("style", "display: inline");
+    $(".slide-5")
+      .attr("style", "display: inline");
+    $(".slide-6")
+      .attr("style", "display: inline");
 
     if (newTodo) {
       $(createTodoElement(todos)).prependTo(`#${todos.name}Table`).hide().slideDown();
@@ -131,7 +128,6 @@ $(document).ready(function () {
 
   const userAuthorized = function() {
     mySwiper.removeSlide(0);
-    mySwiper.appendSlide(`<div class="swiper-slide slide-2 slide-height"><% include partials/_overview %></div>`);
     mySwiper.update();
     mySwiper.slideTo(1, 200);
   }
