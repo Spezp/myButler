@@ -15,22 +15,22 @@ module.exports = function (knex) {
 
   return {
     addUser: function (newUser, callback) {
-    knex('users')
-    .insert(newUser)
-    .asCallback(function(err) {
-        if (err) return console.error(err);
-        callback();
-      });
+      knex('users')
+        .insert(newUser)
+        .asCallback(function(err) {
+          if (err) return console.error(err);
+          callback();
+        });
     },
 
     findUser: function (email, callback) {
       knex.select('id', 'password')
-      .from('users')
-      .where('email', 'like', email)
-      .asCallback(function(err, rows) {
+        .from('users')
+        .where('email', 'like', email)
+        .asCallback(function(err, rows) {
           if (err) return console.error(err);
           callback(rows);
-      });
+        });
     },
 
     updateUser: function(email, callback) {

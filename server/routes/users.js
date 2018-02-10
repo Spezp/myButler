@@ -14,12 +14,21 @@ bk
       email:req.body.email,
       password: bcrypt.hashSync(req.body.password, 10)
     };
-    usersHelper.addUser(newUser,
-      () => {usersHelper.findUser(req.body.email, (user) => {
-        req.session.user_id =user[0].id;
-        const email = user[0].email;
-        res.json({email:email});
-      })});
+    //check if already registered
+    //if not, add
+    //if yes, res.json({isUser: true})
+    usersHelper.findUser(newUser.email, (user) => {
+      if (!user) {
+        res.json({isUser: true});
+      } else {
+        usersHelper.addUser(newUser, () => {
+          usersHelper.findUser(newUser.email, (user) => {
+            req.session.user_id =user[0].id;
+            res.json({isUser: false, email: email});
+          });
+        });
+      }
+    }
   });
 
 
@@ -29,15 +38,14 @@ bk
   usersRoutes.post('/login', (req, res) => {
     usersHelper.findUser(req.body.email, (user) => {
       const user_id = user[0].id;
-      const email = user[0].email;
+      const email = user[0].id;
       if (bcrypt.compareSync(req.body.password, user[0].password)) {
         req.session.user_id = user_id;
-        res.json({email: email});
+        res.json({auth: true, email: email});
       } else {
-        res.json({login: false});
+        res.json({auth: false});
       }
     });
-
   });
 
   //is the redirection correct?

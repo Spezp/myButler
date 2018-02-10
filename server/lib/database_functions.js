@@ -68,6 +68,16 @@ module.exports = function (knex) {
       });
     },
 
+    deleteIndividTodo: function(todoId, callback) {
+      knex('todos')
+      .where('todos.id', todoId)
+      .del()
+      .asCallback(function(err) {
+          if (err) return console.error(err);
+          callback();
+      });
+    },
+
     // expected arguments: todoId; itemChange as text or null; catagChange as text or null
     // completed as 't' or null; callback.
     updateTodosByTodoId: function(todoId, itemChange, categChange, completed, callback) {

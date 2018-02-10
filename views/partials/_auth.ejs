@@ -2,10 +2,11 @@
 
 <div class="container-fluid">
   <h2>please login</h2>
+  <p class="col-xs-12 bg-danger warning" style="display: none"></p>
   <form action="/urls/login" method="POST">
       <div class="row">
         <div class="form-group form-group-lg col-xs-12">
-          <input type="email" class="form-control" id="input-email" placeholder="your@email.com">
+          <input type="email" name="email" class="form-control" id="input-email" placeholder="your@email.com">
         </div>
       </div>
       <div class="row">
@@ -15,12 +16,12 @@
       </div>
         <div class="row">
           <div class="col-xs-12">
-            <button type="button" class="btn btn-lg btn-success col-xs-12 col-sm-12 col-lg-12">login</button>
+            <button type="button" class="btn btn-lg btn-success col-xs-12 col-sm-12 col-lg-12" id="login-btn">login</button>
           </div>
         </div>
       <div class="row padding-ten">
         <div class="col-xs-12">
-          <button type="button" class="btn btn-lg btn-info col-xs-12 col-sm-12 col-lg-12">sign up</button>
+          <button type="button" class="btn btn-lg btn-info col-xs-12 col-sm-12 col-lg-12" id="signup-btn">sign up</button>
         </div>
       </div>
   </form>
