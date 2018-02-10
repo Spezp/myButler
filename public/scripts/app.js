@@ -33,7 +33,7 @@ $(document).ready(function () {
     event.preventDefault();
     mySwiper.slideTo(5, 800);
   });
-/*
+
   $("#todo-textarea").keyup(function () {
     let count = this.value.length;
   });
@@ -81,7 +81,7 @@ $(document).ready(function () {
   };
 
   loadTodos();
-  */
+
 
   //??Can we change button name to btn-register??
   //??is it okay to remove slide-2 after login/register?

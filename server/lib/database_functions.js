@@ -53,7 +53,6 @@ module.exports = function (knex) {
     inserTodosByUserId: function(userId, todoName, callback) {
       getCategory(todoName, (rows) => {
         categoryId = rows[0].id;
-    
         knex('todos')
         .insert({
           item: `${todoName}`,
@@ -68,9 +67,9 @@ module.exports = function (knex) {
         });
       });
     },
-    
+
     // expected arguments: todoId; itemChange as text or null; catagChange as text or null
-    // completed as 't' or null; callback. 
+    // completed as 't' or null; callback.
     updateTodosByTodoId: function(todoId, itemChange, categChange, completed, callback) {
       let categoryId = knex('categories')
         .where({
