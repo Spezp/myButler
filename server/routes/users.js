@@ -50,7 +50,6 @@ module.exports = (usersHelper, bcrypt, session) => {
         res.json({auth: false});
       }
     });
-
   });
 
   //is the redirection correct?
