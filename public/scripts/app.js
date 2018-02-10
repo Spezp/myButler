@@ -97,4 +97,19 @@ $(document).ready(function () {
       $('.slide-2').remove();
     });
   });
+
+  //??change to btn-login?
+  $('.btn-success').on('click', function(event){
+    event.preventDefault();
+    event.stopPropagation();
+    const queryString = `email=${$('#input-email').val()}&password=${$('#input-password').val()}`;
+    $.ajax({
+      url: '/user/login',
+      method: 'POST',
+      data: queryString
+    }).done(function(){
+      $('.slide-2').remove();
+    });
+  });
+
 });
