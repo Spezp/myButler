@@ -72,6 +72,8 @@ module.exports = (dataHelper) => {
 
   //icon view detais??
   todoRoutes.get('/:item', (req, res) => {
+    const item_id = req.body.id;
+
     // AAAAAPPPPPIIIII
   })
 
