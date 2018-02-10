@@ -5,11 +5,7 @@ const express       = require('express');
 const usersRoutes   = express.Router();
 const bcrypt        =require('bcrypt');
 
-
-
-module.exports = (usersHelper, bcrypt, session) => {
-
-  //update new user in db, send cookie
+bk
   //???redirect to which page?
   //need to test user id
   //need :user_id in route?? already have cookie. REST??
@@ -21,7 +17,8 @@ module.exports = (usersHelper, bcrypt, session) => {
     usersHelper.addUser(newUser,
       () => {usersHelper.findUser(req.body.email, (user) => {
         req.session.user_id =user[0].id;
-        res.redirect(`/user/${user[0].id}/todo/categories`);
+        const email = user[0].email;
+        res.json({email:email});
       })});
   });
 
@@ -32,10 +29,13 @@ module.exports = (usersHelper, bcrypt, session) => {
   usersRoutes.post('/login', (req, res) => {
     usersHelper.findUser(req.body.email, (user) => {
       const user_id = user[0].id;
+      const email = user[0].email;
       if (bcrypt.compareSync(req.body.password, user[0].password)) {
         req.session.user_id = user_id;
-        res.redirect(`/user/${user[0].id}/todo/categories`);
-      };
+        res.json({email: email});
+      } else {
+        res.json({login: false});
+      }
     });
 
   });
