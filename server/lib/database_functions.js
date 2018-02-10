@@ -44,12 +44,9 @@ module.exports = function (knex) {
     inserTodosByUserId: function(userId, todoName, callback) {
       getCategory(todoName, (rows) => {
         categoryId = rows[0].id;
-<<<<<<< HEAD
     
-=======
         console.log('categoryId in inserTodosByUserId: ', categoryId);
 
->>>>>>> 2fcac386afdef7648c0be16a8860e522a4738f30
         knex('todos')
         .insert({
           item: `${todoName}`,
@@ -63,7 +60,6 @@ module.exports = function (knex) {
             callback();
         });
       });
-<<<<<<< HEAD
     },
     
     // expected arguments: todoId; itemChange as text or null; catagChange as text or null
@@ -107,8 +103,6 @@ module.exports = function (knex) {
           callback();
       });
       }
-=======
->>>>>>> 2fcac386afdef7648c0be16a8860e522a4738f30
     }
   }
 }
