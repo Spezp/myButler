@@ -35,7 +35,7 @@ module.exports = (usersHelper, bcrypt, session) => {
       if (bcrypt.compareSync(req.body.password, user[0].password)) {
         req.session.user_id = user_id;
         res.redirect(`/user/${user[0].id}/todo/categories`);
-      };
+      }
     });
 
   });
