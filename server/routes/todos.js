@@ -82,6 +82,14 @@ module.exports = (dataHelper) => {
 
   });
 
+  todoRoutes.get('/test', (req, res) => {
+    // run http://localhost:8080/user/1/todo/test  in browser!
+    // (todoId, itemChange, categChange, completed, callback)
+    dataHelper.updateTodosByTodoId(70, null, null, 't', (rows) => {
+      // console.log(rows);
+      callback();
+    });
+  });
 
   return todoRoutes;
 }

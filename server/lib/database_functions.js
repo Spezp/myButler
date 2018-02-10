@@ -44,8 +44,12 @@ module.exports = function (knex) {
     inserTodosByUserId: function(userId, todoName, callback) {
       getCategory(todoName, (rows) => {
         categoryId = rows[0].id;
+<<<<<<< HEAD
+    
+=======
         console.log('categoryId in inserTodosByUserId: ', categoryId);
 
+>>>>>>> 2fcac386afdef7648c0be16a8860e522a4738f30
         knex('todos')
         .insert({
           item: `${todoName}`,
@@ -59,6 +63,52 @@ module.exports = function (knex) {
             callback();
         });
       });
+<<<<<<< HEAD
+    },
+    
+    // expected arguments: todoId; itemChange as text or null; catagChange as text or null
+    // completed as 't' or null; callback. 
+    updateTodosByTodoId: function(todoId, itemChange, categChange, completed, callback) {
+      let categoryId = knex('categories')
+        .where({
+        name: categChange,
+      }).select('id');
+
+      if (itemChange) {
+        knex('todos')
+        .where('id', '=', todoId)
+        .update({
+          item: itemChange
+        })
+        .asCallback(function(err) {
+          if (err) return console.error(err);
+          callback();
+      });
+      }
+      if (categChange) {
+        knex('todos')
+        .where('id', '=', todoId)
+        .update({
+          category_id: categoryId
+        })
+        .asCallback(function(err) {
+          if (err) return console.error(err);
+          callback();
+      });
+      }
+      if (completed) {
+        knex('todos')
+        .where('id', '=', todoId)
+        .update({
+          completed: completed
+        })
+        .asCallback(function(err) {
+          if (err) return console.error(err);
+          callback();
+      });
+      }
+=======
+>>>>>>> 2fcac386afdef7648c0be16a8860e522a4738f30
     }
   }
 }
