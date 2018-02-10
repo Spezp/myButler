@@ -11,12 +11,13 @@ module.exports = (dataHelper) => {
   //if not log in, AJAX in app.js will receive a false value and create a flash message key = msg, value see below
   //if log in, AJAX in app.js will receive json with key = category, value = number of items
   todoRoutes.get('/categories', (req, res) => {
-    if (false){
+    if (!req.session.user_id){
       res.json({login: false, msg:'Please log in'});
     } else {
       const overview = {};
       // const user_id = req.session.user_id;
-      const user_id = 1;
+      // const user_id = 1;
+      const user_id = req.session.user_id;
       dataHelper.getTodosByCatgsByUserId(user_id, "movies", (rows) => {
         overview.movies = rows.length;
         dataHelper.getTodosByCatgsByUserId(user_id, "restaurants", (rows) => {
@@ -38,11 +39,12 @@ module.exports = (dataHelper) => {
 
   //display all items in four categories for swipes
   todoRoutes.get('/', (req, res) => {
-     if (false){
+     if (!req.session.user_id){
       res.json({login: false, msg:'Please log in'});
     } else {
       let fullList = [];
-      const user_id = 1;
+      // const user_id = 1;
+      const user_id = req.session.user_id;
       dataHelper.getTodosByCatgsByUserId(user_id, "movies", (rows) => {
         fullList = rows;
         dataHelper.getTodosByCatgsByUserId(user_id, "restaurants", (rows) => {
@@ -89,10 +91,9 @@ module.exports = (dataHelper) => {
 
   todoRoutes.get('/test', (req, res) => {
     // run http://localhost:8080/user/1/todo/test  in browser!
-    // (todoId, itemChange, categChange, completed, callback)
-    dataHelper.updateTodosByTodoId(70, null, null, 't', (rows) => {
-      // console.log(rows);
-      callback();
+    dataHelper.getIndividTodo(20, (row) => {
+      console.log(row);
+      // callback(row);
     });
   });
 
