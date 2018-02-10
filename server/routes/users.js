@@ -8,17 +8,12 @@ const bcrypt        = require('bcrypt');
 module.exports = (usersHelper, bcrypt, session) => {
 
   //update new user in db, send cookie
-  //???redirect to which page?
-  //need to test user id
-  //need :user_id in route?? already have cookie. REST??
   usersRoutes.post("/register", (req, res) => {
     const newUser = {
       email:req.body.email,
       password: bcrypt.hashSync(req.body.password, 10)
     };
     //check if already registered
-    //if not, add
-    //if yes, res.json({isUser: true})
     usersHelper.findUser(newUser.email, (user) => {
       if (!user) {
         res.json({isRegistered: true});
@@ -36,8 +31,6 @@ module.exports = (usersHelper, bcrypt, session) => {
 
 
   //gather login info, compare with db
-  //send session and redirect to home page
-  //need to test user id
   usersRoutes.post('/login', (req, res) => {
     usersHelper.findUser(req.body.email, (user) => {
       if(user.length) {
@@ -55,36 +48,34 @@ module.exports = (usersHelper, bcrypt, session) => {
     });
   });
 
-  //is the redirection correct?
+  //app.js ? what do you want to display?
   usersRoutes.post('/logout', (req, res) => {
     req.session = null;
-    res.redirect('/');
-  });
-
-  //request will be from avatar btn event listener through ajax
-  //find user in db, in callback, do below
-  //response with user's email, avatar, and potentially other info like profile name to be add in the future
-  //front-end: will display info in form, placeholder are the info, edit and delet btn,
-  usersRoutes.get('/:user_id', (req, res) => {
-
-  });
-
-  //triggered by edit btn and send request through ajax
-  //update in db ---updateUser func
-  //in callback, redirect to route above
-  usersRoutes.put('/:user_id', (req, res) => {
-
+    res.json({login: false});
   });
 
   //triggered by delete btn and send request through ajax
   //delete in db ---deleteUser func
   //in callback, redirect to '/' ?
   usersRoutes.get('/delete', (req, res) => {
-    // const userId = {
-    //   id:req.body.id
-    // };
 
-    console.log('hit server');
+  });
+
+  //request will be from avatar btn event listener through ajax
+  // find user in db, in callback, do below
+  // response with user's email, avatar, and potentially other info like profile name to be add in the future
+  // front-end!!!: will display info in form, placeholder are the info, edit and delet btn,
+  usersRoutes.get('/profile', (req, res) => {
+    usersHelper.findUser(req.body.eamil, (user) => {
+
+    });
+  });
+
+  //triggered by edit btn and send request through ajax
+  //update in db ---updateUser func
+  //in callback, redirect to route above
+  usersRoutes.put('/profile', (req, res) => {
+
   });
 
 

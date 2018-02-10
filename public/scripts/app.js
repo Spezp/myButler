@@ -148,11 +148,11 @@ $(document).ready(function () {
       // response.email to navbar
       if(response.auth){
         userAuthorized();
+        loadTodos();
       } else {
         $(".warning").hide().slideDown();
       }
     });
-    loadTodos();
   });
 
 });
