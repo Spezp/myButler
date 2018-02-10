@@ -78,15 +78,20 @@ module.exports = (dataHelper) => {
 
   });
 
+<<<<<<< Updated upstream
   todoRoutes.delete('/:item', (req, res) => {
+=======
+  //delete icon??
+  // todoRoutes.delete('/:item', (req, res) => {
+>>>>>>> Stashed changes
 
-  });
+  // });
 
   todoRoutes.get('/test', (req, res) => {
     // run http://localhost:8080/user/1/todo/test  in browser!
-    dataHelper.getIndividTodo(20, (row) => {
-      console.log(row);
-      // callback(row);
+    console.log('hit route');
+    dataHelper.deleteIndividTodo(150, () => {
+      res.send('deleted');
     });
   });
 
