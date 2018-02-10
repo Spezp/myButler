@@ -27,12 +27,13 @@ module.exports = (usersHelper, bcrypt, session) => {
       } else {
         usersHelper.addUser(newUser, () => {
           usersHelper.findUser(newUser.email, (user) => {
-            req.session.user_id =user[0].id;
+            req.session.user_id = user[0].id;
+            const email = user[0].email;
             res.json({isUser: false, email: email});
           });
         });
       }
-    }
+    });
   });
 
 
