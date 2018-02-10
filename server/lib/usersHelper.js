@@ -19,6 +19,7 @@ module.exports = function (knex) {
     .insert(newUser)
     .asCallback(function(err) {
         if (err) return console.error(err);
+        callback();
       });
     },
 

@@ -3,25 +3,24 @@
 const usersHelper   = require('../lib/usersHelper');
 const express       = require('express');
 const usersRoutes   = express.Router();
+const bcrypt        =require('bcrypt');
 
 
 
 module.exports = (usersHelper, bcrypt, session) => {
 
-  //gather register info, hash, save to db
-  //and send session, redirect to user profile page
+  //update new user in db, send cookie
+  //???redirect to which page?
   usersRoutes.post("/register", (req, res) => {
     const newUser = {
       email:req.body.email,
-      password: bcrypt.hashSync(req.body.password, 10),
-      avatar: req.body.avatarUrl,
-    }
-    //assuming db will return the user row that just add in
-    usersHelper.addUser(newUser);
-    usersHelper.findUser(req.body.email, (user) => {
-      req.session.user_id =user.id;
-      res.redirect(`/user/${row.user_id}`);
-    });
+      password: bcrypt.hashSync(req.body.password, 10)
+    };
+    usersHelper.addUser(newUser,
+      () => {usersHelper.findUser(req.body.email, (user) => {
+        req.session.user_id =user[0].user_id;
+        res.redirect('/user/1/todo/categories');
+      })});
   });
 
 
