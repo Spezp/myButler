@@ -15,6 +15,7 @@ module.exports = function (knex) {
 
   return {
 
+
     getTodosByCatgsByUserId: function(userId, categoryName, callback) {
       // when we figure out the API stuff, this will be here using the searchTerm, returning category
       knex('todos')
@@ -27,6 +28,7 @@ module.exports = function (knex) {
       });
     },
 
+
     getCategory: function(searchTerm, callback) {
       // when we figure out the API stuff, this will be here using the searchTerm, returning category
       let category = 'books';
@@ -38,11 +40,16 @@ module.exports = function (knex) {
           callback(rows);
       });
     },
-    
+
     inserTodosByUserId: function(userId, todoName, callback) {
       getCategory(todoName, (rows) => {
         categoryId = rows[0].id;
+<<<<<<< HEAD
     
+=======
+        console.log('categoryId in inserTodosByUserId: ', categoryId);
+
+>>>>>>> 2fcac386afdef7648c0be16a8860e522a4738f30
         knex('todos')
         .insert({
           item: `${todoName}`,
@@ -56,6 +63,7 @@ module.exports = function (knex) {
             callback();
         });
       });
+<<<<<<< HEAD
     },
     
     // expected arguments: todoId; itemChange as text or null; catagChange as text or null
@@ -99,6 +107,8 @@ module.exports = function (knex) {
           callback();
       });
       }
+=======
+>>>>>>> 2fcac386afdef7648c0be16a8860e522a4738f30
     }
   }
 }
@@ -119,14 +129,8 @@ module.exports = function (knex) {
 //   console.log('rows returned: ', rows);
 // });
 
-// exports.getCategory = getCategory;
-// exports.getTodosByCatgsByUserId = getTodosByCatgsByUserId;
-// exports.inserTodosByUserId = inserTodosByUserId;
-
 // getTodosAndCatgsByUserId(1, (rows) => {
 //   console.log('rows returned: ', rows);
 // });
-
-
 
 

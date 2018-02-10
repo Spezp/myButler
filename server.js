@@ -17,13 +17,13 @@ const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
-const usersHelper = require('./server/lib/database_functions')(knex);
+const usersHelper = require('./server/lib/usersHelper')(knex);
 const dataHelper = require('./server/lib/database_functions')(knex);
 
 
 
 // Seperated Routes for each Resource
-const userRoutes = require("./server/routes/users")(usersHelper, bcrypt, cookieSession);
+const usersRoutes = require("./server/routes/users")(usersHelper, bcrypt, cookieSession);
 const todoRoutes = require("./server/routes/todos")(dataHelper);
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -53,7 +53,7 @@ app.use(methodOverride('_method'));
 
 
 // Mount all users routes
-app.use("/user", userRoutes);
+app.use("/user", usersRoutes);
 
 //Mount all todos routes
 app.use("/user/:user_id/todo", todoRoutes);
