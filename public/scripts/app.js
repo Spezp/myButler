@@ -138,6 +138,7 @@ $(document).ready(function () {
   $('#login-btn').on('click', function(event){
     event.preventDefault();
     event.stopPropagation();
+    console.log('clicked login');
     const queryString = `email=${$('#input-email').val()}&password=${$('#input-password').val()}`;
     $.ajax({
       url: '/user/login',

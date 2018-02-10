@@ -5,8 +5,6 @@ const express       = require('express');
 const usersRoutes   = express.Router();
 const bcrypt        = require('bcrypt');
 
-
-
 module.exports = (usersHelper, bcrypt, session) => {
 
   //update new user in db, send cookie
