@@ -15,8 +15,6 @@ module.exports = (dataHelper) => {
       res.json({login: false, msg:'Please log in'});
     } else {
       const overview = {};
-      // const user_id = req.session.user_id;
-      // const user_id = 1;
       const user_id = req.session.user_id;
       dataHelper.getTodosByCatgsByUserId(user_id, "movies", (rows) => {
         overview.movies = rows.length;
@@ -26,7 +24,6 @@ module.exports = (dataHelper) => {
             overview.books = rows.length;
             dataHelper.getTodosByCatgsByUserId(user_id, "products", (rows) => {
               overview.products = rows.length;
-              console.log(overview);
               res.json(overview);
             });
           });
@@ -43,7 +40,6 @@ module.exports = (dataHelper) => {
       res.json({login: false, msg:'Please log in'});
     } else {
       let fullList = [];
-      // const user_id = 1;
       const user_id = req.session.user_id;
       dataHelper.getTodosByCatgsByUserId(user_id, "movies", (rows) => {
         fullList = rows;

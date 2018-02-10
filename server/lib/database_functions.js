@@ -37,6 +37,7 @@ module.exports = function (knex) {
       });
     },
 
+
     getCategory: function(searchTerm, callback) {
       // when we figure out the API stuff, this will be here using the searchTerm, returning category
       let category = 'books';
@@ -66,7 +67,7 @@ module.exports = function (knex) {
         });
       });
     },
-    
+
     deleteIndividTodo: function(todoId, callback) {
       knex('todos')
       .where('todos.id', todoId)
