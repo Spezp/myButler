@@ -11,48 +11,54 @@ module.exports = (dataHelper) => {
   //if not log in, AJAX in app.js will receive a false value and create a flash message key = msg, value see below
   //if log in, AJAX in app.js will receive json with key = category, value = number of items
   todoRoutes.get('/categories', (req, res) => {
-    if (!req.session.user_id){
+    if (false){
       res.json({login: false, msg:'Please log in'});
     } else {
       const overview = {};
-      dataHelper.getTodosByCatgsByUserId(req.session.user_id, "movies", (rows) => {
+      // const user_id = req.session.user_id;
+      const user_id = 1;
+      dataHelper.getTodosByCatgsByUserId(user_id, "movies", (rows) => {
         overview.movies = rows.length;
+        dataHelper.getTodosByCatgsByUserId(user_id, "restaurants", (rows) => {
+          overview.restaurants = rows.length;
+          dataHelper.getTodosByCatgsByUserId(user_id, "books", (rows) => {
+            overview.books = rows.length;
+            dataHelper.getTodosByCatgsByUserId(user_id, "products", (rows) => {
+              overview.products = rows.length;
+              console.log(overview);
+              res.json(overview);
+            });
+          });
+        });
       });
-      dataHelper.getTodosByCatgsByUserId(req.session.user_id, "restaurants", (rows) => {
-        overview.restaurants = rows.length;
-      });
-      dataHelper.getTodosByCatgsByUserId(req.session.user_id, "books", (rows) => {
-        overview.books = rows.length;
-      });
-      dataHelper.getTodosByCatgsByUserId(req.session.user_id, "products", (rows) => {
-        overview.products = rows.length;
-      });
-      res.json(overview);
     }
   });
+
 
 
   //display all items in four categories for swipes
   todoRoutes.get('/', (req, res) => {
-     if (!req.session.user_id){
+     if (false){
       res.json({login: false, msg:'Please log in'});
     } else {
-      const fullList = [];
-      dataHelper.getTodosByCatgsByUserId(req.session.user_id, "movies", (rows) => {
+      let fullList = [];
+      const user_id = 1;
+      dataHelper.getTodosByCatgsByUserId(user_id, "movies", (rows) => {
         fullList = rows;
+        dataHelper.getTodosByCatgsByUserId(user_id, "restaurants", (rows) => {
+          fullList = fullList.concat(rows);
+          dataHelper.getTodosByCatgsByUserId(user_id, "books", (rows) => {
+            fullList = fullList.concat(rows);
+            dataHelper.getTodosByCatgsByUserId(user_id, "products", (rows) => {
+              fullList = fullList.concat(rows);
+              res.json(fullList);
+            });
+          });
+        });
       });
-      dataHelper.getTodosByCatgsByUserId(req.session.user_id, "restaurants", (rows) => {
-        fullList = fullList.concat(rows);
-      });
-      dataHelper.getTodosByCatgsByUserId(req.session.user_id, "books", (rows) => {
-        fullList = fullList.concat(rows);
-      });
-      dataHelper.getTodosByCatgsByUserId(req.session.user_id, "products", (rows) => {
-        fullList = fullList.concat(rows);
-      });
-      res.json(fullList);
     }
   });
+
 
 
   //receive ajax's data in req.body
