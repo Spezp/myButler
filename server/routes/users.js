@@ -67,7 +67,7 @@ module.exports = (usersHelper, bcrypt, session) => {
     if (userId) {
       usersHelper.deleteUser(userId, () => {});
     }
-});
+  });
 
 
   // find user in db, in callback, do below
