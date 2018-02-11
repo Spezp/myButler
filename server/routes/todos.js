@@ -57,9 +57,9 @@ module.exports = (dataHelper, https) => {
 
   //receive ajax's data in req.body
   //update in db
-  //send category and its all items to update display
+  //send category and all its items to update display
   todoRoutes.post('/', (req, res) =>{
-    //assuming ajax data is querystring with key = text
+    //assuming ajax data is querystring with key = text 
     if (!req.body.text) {
       res.status(400).json({error: 'invalid request: no data in POST body'})
     }
@@ -136,9 +136,22 @@ module.exports = (dataHelper, https) => {
 
   // when a user clicks edit button, will send todo id in req.body.
   // TODO- this is now harcoded. will have to find, then update (with category or item)
-  todoRoutes.put('/:item', (req, res) => {
+  // using GET for testing - TODO - need to change to put
+  todoRoutes.get('/:item', (req, res) => {
+    // to be deleted
+    // TODO - the parameter to update will be sent in the req.body (I think??). now it's hardcoded.
     let todoId = req.params.item;
-    res.sentd('todoId: ', todoId);
+    let itemChange = 'read Eat Love Pray';
+
+    // need to use or null each parameter:
+    // updateTodosByTodoId: function(todoId, itemChange, categChange, completed, callback)
+    if (todoId) {
+      dataHelper.updateTodosByTodoId(todoId, itemChange, null, null, () => {
+        res.send(`updated ${todoId}, go check the database!`);
+      })
+    } else {
+     res.status(400).json({error: 'Invalid request: no todoId to update'});
+    }
   });
 
   // when a user clicks delete button, will send todo id in req.body.
@@ -151,10 +164,11 @@ module.exports = (dataHelper, https) => {
       res.send(`deleted ${todoId}, go check the database!`);
       })
     } else {
-      res.status(400).json({error: 'invalid request: no todoId to delete'})
+      res.status(400).json({error: 'invalid request: no todoId to delete'});
     }
   });
 
+  // test function to test the backend - delete after done!
   todoRoutes.get('/test', (req, res) => {
     // run http://localhost:8080/user/1/todo/test  in browser!
     dataHelper.getIndividTodo(20, (row) => {
