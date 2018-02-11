@@ -19,19 +19,19 @@ $(document).ready(function () {
   });
   $('#books-btn').click(function (event) {
     event.preventDefault();
-    mySwiper.slideTo(2, 200);
+    mySwiper.slideTo(1, 200);
   });
   $('#dining-btn').click( function ( event ) {
     event.preventDefault();
-    mySwiper.slideTo(3, 400);
+    mySwiper.slideTo(2, 400);
   });
   $('#movies-btn').click(function (event) {
     event.preventDefault();
-    mySwiper.slideTo(4, 600);
+    mySwiper.slideTo(3, 600);
   });
   $('#products-btn').click(function (event) {
     event.preventDefault();
-    mySwiper.slideTo(5, 800);
+    mySwiper.slideTo(4, 800);
   });
 
   $("#todo-textarea").keyup(function () {
@@ -50,7 +50,7 @@ $(document).ready(function () {
   });
 
   const createTodoElement = function (todoDB) {
-
+     console.log("helllo")
     let template = `<tr data-id="${todoDB.id}"><td>${todoDB.item}</td><td></td><td id="data-icon"><i class="fas fa-pencil-alt"></i><a ><i class="far fa-trash-alt"></i></a></td></tr>`;
 
     return template;
@@ -74,10 +74,10 @@ $(document).ready(function () {
       .attr("style", "display: inline");
 
     if (newTodo) {
-      $(createTodoElement(todos)).prependTo(`#${todos.name}Table`).hide().slideDown();
+      $(createTodoElement(todos)).appendTo(`#${todos.name}Table`).hide().slideDown();
     } else {
       todos.forEach(function (todo) {
-        $(createTodoElement(todo)).prependTo(`#${todos.name}Table`);
+        $(createTodoElement(todo)).appendTo(`#${todo.name}Table`);
       });
     }
     mySwiper.update();
@@ -91,14 +91,15 @@ $(document).ready(function () {
 
   let loadTodos = () => {
     $.getJSON("/todo/categories", (json) => {
-      console.log(json);
+
       $(`#books-badge`).text(json.books);
       $(`#dining-badge`).text(json.restaurants);
       $(`#movies-badge`).text(json.movies);
       $(`#products-badge`).text(json.products);
     });
+
     $.getJSON("/todo", (json) => {
-      console.log(json);
+      console.log('json', json);
       renderTodos(json, false);
     });
   };
@@ -151,5 +152,6 @@ $(document).ready(function () {
       }
     });
   });
+  loadTodos();
 
 });

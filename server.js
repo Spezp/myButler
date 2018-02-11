@@ -60,7 +60,7 @@ app.use("/todo", todoRoutes);
 
 // Home page
 app.get("/", (req, res) => {
-  const templateVars ={};
+  let templateVars = {};
   if (req.session.user_id) {
     templateVars = {login: true};
   } else {
