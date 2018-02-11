@@ -59,7 +59,7 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
   //update in db
   //send category and all its items to update display
   todoRoutes.post('/', (req, res) =>{
-    //assuming ajax data is querystring with key = text
+    
     if (!req.body.text) {
       res.status(400).json({error: 'invalid request: no data in POST body'})
     }
@@ -69,10 +69,11 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
   // when a user clicks '+' button, will send todo item in req.body.
   // TODO- need to change to a POST route when the action from the button is linked up
   // this is now harcoded in the url. will have to pass it in, then insert item
-  todoRoutes.get('/:item', (req, res) => {
+  todoRoutes.post('/:item', (req, res) => {
     let userId = req.session.user_id;
     let todoItem = req.params.item;
-
+    console.log(req.params.item);
+    
     if (todoItem) {
       dataHelper.inserTodosByUserId(userId, todoItem, () => {
       res.send(`inserted ${todoItem}, go check the database!`);

@@ -42,12 +42,16 @@ $(document).ready(function () {
   });
 
   $("#post-todo").click( function( event ) {
+    console.log('hello')
+    console.log($("#todo-textarea"))
     event.preventDefault();
     let isContent = $("#todo-textarea").val();
     if(!isContent.trim()){
       throw err;
     }
-    $.post("/todo", $("#todo-textarea").serialize(), function () {
+    $.post("/todo", $( "#todo-textarea" ).serialize(), function () {
+      console.log($("#todo-textarea").text());
+      
       loadNewTodo();
     });
   });
