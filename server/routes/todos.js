@@ -4,7 +4,7 @@ const dataHelper      = require("../lib/database_functions");
 const express         = require('express');
 const todoRoutes      = express.Router();
 
-module.exports = (dataHelper, https) => {
+module.exports = (dataHelper, https, prodAdv, btoken) => {
 
   //overview on the home page
   //response with all todos in there category under this user
@@ -57,7 +57,7 @@ module.exports = (dataHelper, https) => {
 
   //receive ajax's data in req.body
   //update in db
-  //send category and its all items to update display
+  //send category and all its items to update display
   todoRoutes.post('/', (req, res) =>{
     //assuming ajax data is querystring with key = text
     if (!req.body.text) {
@@ -71,60 +71,78 @@ module.exports = (dataHelper, https) => {
   todoRoutes.get('/:item', (req, res) => {
     // const item = req.params.item;
     // const category = req.body.category;
-    const item = 'north-india-restaurant-san-francisco';
-    const category = 'movies';
+    const item = 'Muku';
+    const category = 'restaurants';
+    //const item = 'Star';
+    //const category = 'movies';
+    //const item = 'Harry';
+    //const category = 'books';
     if (category === 'restaurants') {
       const option = {
           hostname: 'api.yelp.com',
-          path: `/v3/businesses/${item}`,
+          path: `/v3/businesses/search?term=${item}&latitude=51.044270&longitude=-114.062019&limit=2`,
           headers:{
-              Authorization: 'Bearer TsJGuoxAQeB8zt7NNM6G-bzR6ZCio2Shj0nfhZmt2J9PC0__tbHoIDb68VfN_Z1vt9rvV9DQnFSqHyAZ5BZ8SEEdUeHuqPEj_H18dCq1CRnfbjBto4h-gqgoc5h7WnYx'
+              Authorization: btoken['b']
           }
       };
+      let apiResult;
       https.get(option, function(response) {
         response.setEncoding('utf8');
         response.on('error', function(err){
           res.json(err);
         })
         response.on('data', function (data) {
-          res.json(data);
+          apiResult = data;
+        })
+        response.on('end', function(){
+          const apiResultParsed = JSON.parse(apiResult);
+          const addrArr = apiResultParsed['businesses'][0]['location']['display_address'];
+          const addr = addrArr.join(' ');
+          const extraInfo = {
+            url: apiResultParsed['businesses'][0]['url'],
+            rating: apiResultParsed['businesses'][0]['rating'],
+            address: addr,
+            price: apiResultParsed['businesses'][0]['price']
+          };
+          res.json(extraInfo);
         });
       });
     }
     if (category === 'movies') {
       const option = {
           hostname: 'www.omdbapi.com',
-          path: '/?apikey=thewdb&t=pop\%20fiction',
-          // headers:{
-          //     Authorization: 'Bearer TsJGuoxAQeB8zt7NNM6G-bzR6ZCio2Shj0nfhZmt2J9PC0__tbHoIDb68VfN_Z1vt9rvV9DQnFSqHyAZ5BZ8SEEdUeHuqPEj_H18dCq1CRnfbjBto4h-gqgoc5h7WnYx'
-          // }
+          path: `/?apikey=thewdb&t=${item}`,
       };
+      let buffer = [];
       https.get(option, function(response) {
         response.setEncoding('utf8');
         response.on('error', function(err){
-          res.json(err);
+          console.log(err);
         })
         response.on('data', function (data) {
-          res.json(data);
+          buffer.push(data);
+
+        });
+        response.on('end', function(){
+          const apiResult = buffer.join('');
+          const apiResultParsed = JSON.parse(apiResult);
+          const extraInfo = {
+            rating: apiResultParsed['imdbRating'],
+            poster: apiResultParsed['Poster']
+          };
+          res.send(extraInfo);
         });
       });
     }
-    if (category === 'products') {
-      const option = {
-          hostname: 'webservices.amazon.com',
-          path: '/onca/xml?Service=AWSECommerceService&Operation=ItemSearch&SubscriptionId=AKIAJNGUN7PHID6ARE4A&AssociateTag=mybutler-20&SearchIndex=Books&Keywords=Instant',
-          // headers:{
-          //     Authorization: 'Bearer TsJGuoxAQeB8zt7NNM6G-bzR6ZCio2Shj0nfhZmt2J9PC0__tbHoIDb68VfN_Z1vt9rvV9DQnFSqHyAZ5BZ8SEEdUeHuqPEj_H18dCq1CRnfbjBto4h-gqgoc5h7WnYx'
-          // }
-      };
-      https.get(option, function(response) {
-        response.setEncoding('utf8');
-        response.on('error', function(err){
-          res.json(err);
-        })
-        response.on('data', function (data) {
-          res.json(data);
-        });
+    if (category === 'books') {
+      prodAdv.call("ItemSearch", {SearchIndex: "Books", Keywords: `${item}`}, function(err, result) {
+        console.log(err);
+        if(result['Items']['Item'].length) {
+          const extraInfo = result['Items']['Item'][0]['DetailPageURL'];
+          res.json({url: extraInfo});
+        } else {
+          res.json({msg: 'Sorry, no related product found on Amazon'})
+        }
       });
       }
 
@@ -136,23 +154,39 @@ module.exports = (dataHelper, https) => {
 
   // when a user clicks edit button, will send todo id in req.body.
   // TODO- this is now harcoded. will have to find, then update (with category or item)
-  // todoRoutes.put('/:item', (req, res) => {
+  // using GET for testing - TODO - need to change to put
+  todoRoutes.get('/:item', (req, res) => {
+    // to be deleted
+    // TODO - the parameter to update will be sent in the req.body (I think??). now it's hardcoded.
+    let todoId = req.params.item;
+    let itemChange = 'read Eat Love Pray';
+
+    // need to use or null each parameter:
+    // updateTodosByTodoId: function(todoId, itemChange, categChange, completed, callback)
+    if (todoId) {
+      dataHelper.updateTodosByTodoId(todoId, itemChange, null, null, () => {
+        res.send(`updated ${todoId}, go check the database!`);
+      })
+    } else {
+     res.status(400).json({error: 'Invalid request: no todoId to update'});
+    }
+  });
 
   // when a user clicks delete button, will send todo id in req.body.
   // todoRoutes.delete('/:item', (req, res) => {     // need to change to the delete route
   // TODO- this is now harcoded in the url. will have to pass it in, then delete item
   todoRoutes.get('/:item', (req, res) => {
     let todoId = req.params.item;
-    console.log('item:', todoId);
     if (todoId) {
       dataHelper.deleteIndividTodo(todoId, () => {
       res.send(`deleted ${todoId}, go check the database!`);
       })
     } else {
-      res.status(400).json({error: 'invalid request: no todoId to delete'})
+      res.status(400).json({error: 'invalid request: no todoId to delete'});
     }
   });
 
+  // test function to test the backend - delete after done!
   todoRoutes.get('/test', (req, res) => {
     // run http://localhost:8080/user/1/todo/test  in browser!
     dataHelper.getIndividTodo(20, (row) => {

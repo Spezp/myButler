@@ -12,6 +12,7 @@
   "author": "Lighthouse Labs",
   "license": "ISC",
   "dependencies": {
+    "aws-lib": "^0.3.0",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.15.2",
     "bootstrap": "^4.0.0",

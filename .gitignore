@@ -10,3 +10,5 @@ README.md
 settings.json
 .gitignore
 .DS_Store
+btoken.js
+keys.js

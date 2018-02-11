@@ -12,6 +12,8 @@ const bcrypt            =require('bcrypt');
 const methodOverride    =require('method-override');
 const app               = express();
 const https       =require('https');
+//const parseString = require('xml2js').parseString;
+const aws         =require('aws-lib');
 
 const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
@@ -19,12 +21,16 @@ const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 const usersHelper = require('./server/lib/usersHelper')(knex);
 const dataHelper = require('./server/lib/database_functions')(knex);
+const keys        =require('./server/lib/keys');
+const btoken          =require('./server/lib/btoken');
 
 
+
+const prodAdv = aws.createProdAdvClient(keys['1'], keys['2'], keys['3']);
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./server/routes/users")(usersHelper, bcrypt, cookieSession);
-const todoRoutes = require("./server/routes/todos")(dataHelper, https);
+const todoRoutes = require("./server/routes/todos")(dataHelper, https, prodAdv, btoken);
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -60,7 +66,11 @@ app.use("/todo", todoRoutes);
 
 // Home page
 app.get("/", (req, res) => {
+<<<<<<< HEAD
   let templateVars = {};
+=======
+  let templateVars ={};
+>>>>>>> 73ec93cbb38bc1e0ef4b585fac9009a5384479a7
   if (req.session.user_id) {
     templateVars = {login: true};
   } else {
