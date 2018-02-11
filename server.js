@@ -11,7 +11,7 @@ const cookieSession     =require('cookie-session');
 const bcrypt            =require('bcrypt');
 const methodOverride    =require('method-override');
 const app               = express();
-
+const https       =require('https');
 
 const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
@@ -24,7 +24,7 @@ const dataHelper = require('./server/lib/database_functions')(knex);
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./server/routes/users")(usersHelper, bcrypt, cookieSession);
-const todoRoutes = require("./server/routes/todos")(dataHelper);
+const todoRoutes = require("./server/routes/todos")(dataHelper, https);
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -60,7 +60,7 @@ app.use("/todo", todoRoutes);
 
 // Home page
 app.get("/", (req, res) => {
-  const templateVars ={};
+  let templateVars ={};
   if (req.session.user_id) {
     templateVars = {login: true};
   } else {
