@@ -26,11 +26,11 @@
         
           <div class="swiper-wrapper">
             <div class="swiper-slide slide-1 slide-height"><% include partials/_auth %></div>
-            <div class="swiper-slide slide-2 slide-height"><% include partials/_overview %></div>
-            <div class="swiper-slide slide-3 slide-height" style="display: none" ><% include partials/_books %></div>
-            <div class="swiper-slide slide-4 slide-height" style="display: none" ><% include partials/_dining %></div>
-            <div class="swiper-slide slide-5 slide-height" style="display: none" ><% include partials/_movies %></div>
-            <div class="swiper-slide slide-6 slide-height" style="display: none" ><% include partials/_products %></div>
+            <div class="swiper-slide slide-2 slide-height" <% if (!templateVars.login) { %>style="display: none" <% } %>><% include partials/_overview %></div>
+            <div class="swiper-slide slide-3 slide-height" <% if (!login) { %>style="display: none" <% } %> ><% include partials/_books %></div>
+            <div class="swiper-slide slide-4 slide-height" <% if (!login) { %>style="display: none" <% } %> ><% include partials/_dining %></div>
+            <div class="swiper-slide slide-5 slide-height" <% if (!login) { %>style="display: none" <% } %> ><% include partials/_movies %></div>
+            <div class="swiper-slide slide-6 slide-height" <% if (!login) { %>style="display: none" <% } %>><% include partials/_products %></div>
           </div>
         <div class="swiper-pagination"></div>
 
