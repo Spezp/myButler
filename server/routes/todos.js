@@ -4,7 +4,7 @@ const dataHelper      = require("../lib/database_functions");
 const express         = require('express');
 const todoRoutes      = express.Router();
 
-module.exports = (dataHelper, https) => {
+module.exports = (dataHelper, https, prodAdv) => {
 
   //overview on the home page
   //response with all todos in there category under this user
@@ -71,60 +71,78 @@ module.exports = (dataHelper, https) => {
   todoRoutes.get('/:item', (req, res) => {
     // const item = req.params.item;
     // const category = req.body.category;
-    const item = 'north-india-restaurant-san-francisco';
+    //const item = 'Muku';
+    //const category = 'restaurants';
+    const item = 'Star';
     const category = 'movies';
+    //const item = 'Harry';
+    //const category = 'books';
     if (category === 'restaurants') {
       const option = {
           hostname: 'api.yelp.com',
-          path: `/v3/businesses/${item}`,
+          path: `/v3/businesses/search?term=${item}&latitude=51.044270&longitude=-114.062019&limit=2`,
           headers:{
               Authorization: 'Bearer TsJGuoxAQeB8zt7NNM6G-bzR6ZCio2Shj0nfhZmt2J9PC0__tbHoIDb68VfN_Z1vt9rvV9DQnFSqHyAZ5BZ8SEEdUeHuqPEj_H18dCq1CRnfbjBto4h-gqgoc5h7WnYx'
           }
       };
+      let apiResult;
       https.get(option, function(response) {
         response.setEncoding('utf8');
         response.on('error', function(err){
           res.json(err);
         })
         response.on('data', function (data) {
-          res.json(data);
+          apiResult = data;
+        })
+        response.on('end', function(){
+          const apiResultParsed = JSON.parse(apiResult);
+          const addrArr = apiResultParsed['businesses'][0]['location']['display_address'];
+          const addr = addrArr.join(' ');
+          const extraInfo = {
+            url: apiResultParsed['businesses'][0]['url'],
+            rating: apiResultParsed['businesses'][0]['rating'],
+            address: addr,
+            price: apiResultParsed['businesses'][0]['price']
+          };
+          res.json(extraInfo);
         });
       });
     }
     if (category === 'movies') {
       const option = {
           hostname: 'www.omdbapi.com',
-          path: '/?apikey=thewdb&t=pop\%20fiction',
-          // headers:{
-          //     Authorization: 'Bearer TsJGuoxAQeB8zt7NNM6G-bzR6ZCio2Shj0nfhZmt2J9PC0__tbHoIDb68VfN_Z1vt9rvV9DQnFSqHyAZ5BZ8SEEdUeHuqPEj_H18dCq1CRnfbjBto4h-gqgoc5h7WnYx'
-          // }
+          path: `/?apikey=thewdb&t=${item}`,
       };
+      let buffer = [];
       https.get(option, function(response) {
         response.setEncoding('utf8');
         response.on('error', function(err){
-          res.json(err);
+          console.log(err);
         })
         response.on('data', function (data) {
-          res.json(data);
+          buffer.push(data);
+
+        });
+        response.on('end', function(){
+          const apiResult = buffer.join('');
+          const apiResultParsed = JSON.parse(apiResult);
+          const extraInfo = {
+            rating: apiResultParsed['imdbRating'],
+            poster: apiResultParsed['Poster']
+          };
+          res.send(extraInfo);
         });
       });
     }
-    if (category === 'products') {
-      const option = {
-          hostname: 'webservices.amazon.com',
-          path: '/onca/xml?Service=AWSECommerceService&Operation=ItemSearch&SubscriptionId=AKIAJNGUN7PHID6ARE4A&AssociateTag=mybutler-20&SearchIndex=Books&Keywords=Instant',
-          // headers:{
-          //     Authorization: 'Bearer TsJGuoxAQeB8zt7NNM6G-bzR6ZCio2Shj0nfhZmt2J9PC0__tbHoIDb68VfN_Z1vt9rvV9DQnFSqHyAZ5BZ8SEEdUeHuqPEj_H18dCq1CRnfbjBto4h-gqgoc5h7WnYx'
-          // }
-      };
-      https.get(option, function(response) {
-        response.setEncoding('utf8');
-        response.on('error', function(err){
-          res.json(err);
-        })
-        response.on('data', function (data) {
-          res.json(data);
-        });
+    if (category === 'books') {
+      prodAdv.call("ItemSearch", {SearchIndex: "Books", Keywords: `${item}`}, function(err, result) {
+        console.log(err);
+        if(result['Items']['Item'].length) {
+          const extraInfo = result['Items']['Item'][0]['DetailPageURL'];
+          res.json({url: extraInfo});
+        } else {
+          res.json({msg: 'Sorry, no related product found on Amazon'})
+        }
       });
       }
 
