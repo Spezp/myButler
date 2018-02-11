@@ -67,6 +67,8 @@ module.exports = (usersHelper, bcrypt, session) => {
     if (userId) {
       usersHelper.deleteUser(userId, () => {});
     }
+});
+
 
   // find user in db, in callback, do below
   // response with user's email, avatar, and potentially other info like profile name to be add in the future
