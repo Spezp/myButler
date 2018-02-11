@@ -32,8 +32,6 @@ module.exports = (dataHelper) => {
     }
   });
 
-
-
   //display all items in four categories for swipes
   todoRoutes.get('/', (req, res) => {
      if (!req.session.user_id){
@@ -57,8 +55,6 @@ module.exports = (dataHelper) => {
     }
   });
 
-
-
   //receive ajax's data in req.body
   //update in db
   //send category and its all items to update display
@@ -71,18 +67,29 @@ module.exports = (dataHelper) => {
   });
 
   //icon view detais??
+  // todoRoutes.get('/:item', (req, res) => {
+  //   // AAAAAPPPPPIIIII
+  // })
+
+  // when a user clicks edit button, will send todo id in req.body.
+  // TODO- this is now harcoded. will have to find, then update (with category or item)
+  // todoRoutes.put('/:item', (req, res) => {
+
+  // });
+
+  // when a user clicks delete button, will send todo id in req.body.
+  // todoRoutes.delete('/:item', (req, res) => {     // need to change to the delete route
+  // TODO- this is now harcoded in the url. will have to pass it in, then delete item
   todoRoutes.get('/:item', (req, res) => {
-    // AAAAAPPPPPIIIII
-  })
-
-  //icon edit item??
-  todoRoutes.put('/:item', (req, res) => {
-
-  });
-
-  //delete icon??
-  todoRoutes.delete('/:item', (req, res) => {
-
+    let todoId = req.params.item;
+    console.log('item:', todoId);
+    if (todoId) {
+      dataHelper.deleteIndividTodo(todoId, () => {
+      res.send(`deleted ${todoId}, go check the database!`);
+      })
+    } else {
+      res.status(400).json({error: 'invalid request: no todoId to delete'})
+    }
   });
 
   todoRoutes.get('/test', (req, res) => {
