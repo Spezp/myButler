@@ -95,7 +95,7 @@ $(document).ready(function () {
   };
   
   let updateCategories = () => {
-    $.getJSON("/todo/categories", () => {
+    $.getJSON("/todo/categories", (json) => {
 
       $(`#books-badge`).text(json.books);
       $(`#dining-badge`).text(json.restaurants);
