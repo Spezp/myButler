@@ -93,24 +93,28 @@ $(document).ready(function () {
     }
     mySwiper.update();
   };
-
-  let loadNewTodo = () => {
-    $.getJSON("/todo", (json) => {
-      renderTodos(json[json.length - 1], true);
-    });
-  };
-
-  let loadTodos = () => {
-    $.getJSON("/todo/categories", (json) => {
+  
+  let updateCategories = () => {
+    $.getJSON("/todo/categories", () => {
 
       $(`#books-badge`).text(json.books);
       $(`#dining-badge`).text(json.restaurants);
       $(`#movies-badge`).text(json.movies);
       $(`#products-badge`).text(json.products);
     });
+  };
 
+  let loadNewTodo = () => {
+    updateCategories();
+    $.getJSON("/todo/", (json) => {
+ 
+      renderTodos(json[json.length - 1], true);
+    });
+  };
+
+  let loadTodos = () => {
+    updateCategories();
     $.getJSON("/todo", (json) => {
-      console.log('json', json);
       renderTodos(json, false);
     });
   };
