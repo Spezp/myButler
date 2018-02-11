@@ -2,27 +2,27 @@
 
 require('dotenv').config();
 
-const PORT        = process.env.PORT || 8080;
-const ENV         = process.env.ENV || "development";
-const express     = require("express");
-const bodyParser  = require("body-parser");
-const sass        = require("node-sass-middleware");
-const cookieSession     =require('cookie-session');
-const bcrypt            =require('bcrypt');
-const methodOverride    =require('method-override');
+const PORT              = process.env.PORT || 8080;
+const ENV               = process.env.ENV || "development";
+const express           = require("express");
+const bodyParser        = require("body-parser");
+const sass              = require("node-sass-middleware");
+const cookieSession     = require('cookie-session');
+const bcrypt            = require('bcrypt');
+const methodOverride    = require('method-override');
 const app               = express();
-const https       =require('https');
+const https             = require('https');
 //const parseString = require('xml2js').parseString;
-const aws         =require('aws-lib');
+const aws               = require('aws-lib');
 
-const knexConfig  = require("./knexfile");
-const knex        = require("knex")(knexConfig[ENV]);
-const morgan      = require('morgan');
-const knexLogger  = require('knex-logger');
-const usersHelper = require('./server/lib/usersHelper')(knex);
-const dataHelper = require('./server/lib/database_functions')(knex);
-const keys        =require('./server/lib/keys');
-const btoken          =require('./server/lib/btoken');
+const knexConfig        = require("./knexfile");
+const knex              = require("knex")(knexConfig[ENV]);
+const morgan            = require('morgan');
+const knexLogger        = require('knex-logger');
+const usersHelper       = require('./server/lib/usersHelper')(knex);
+const dataHelper        = require('./server/lib/database_functions')(knex);
+const keys              = require('./server/lib/keys');
+const btoken            = require('./server/lib/btoken');
 
 
 

@@ -17,6 +17,9 @@ $(document).ready(function () {
       prevEl: '.swiper-button-prev'
     }
   });
+
+  // Swipe button navigation
+  //
   $('#books-btn').click(function (event) {
     event.preventDefault();
     mySwiper.slideTo(1, 200);
@@ -49,6 +52,8 @@ $(document).ready(function () {
     });
   });
 
+  //Builds todo row and returns to render todos
+  //
   const createTodoElement = function (todoDB) {
      console.log("helllo")
     let template = `<tr data-id="${todoDB.id}"><td>${todoDB.item}</td><td></td><td id="data-icon"><i class="fas fa-pencil-alt"></i><a ><i class="far fa-trash-alt"></i></a></td></tr>`;
@@ -56,9 +61,11 @@ $(document).ready(function () {
     return template;
   };
 
+  // builds slide page navigation login
+  //
   const renderTodos = (todos, newTodo) => {
-    let contentAll = '';
-
+    
+    //checks authorization
     if (!todos) {
       return null;
     }
@@ -104,11 +111,13 @@ $(document).ready(function () {
     });
   };
 
-
-
-
-  //??Can we change button name to btn-register??
-  //??is it okay to remove slide-2 after login/register?
+  //login ajax & auth
+  //
+  const userAuthorized = function() {
+    mySwiper.removeSlide(0);
+    mySwiper.update();
+    mySwiper.slideTo(1, 200);
+  };
   $('#signup-btn').on('click', function(event){
     event.preventDefault();
     event.stopPropagation();
@@ -126,17 +135,10 @@ $(document).ready(function () {
     });
     loadTodos();
   });
-
-  const userAuthorized = function() {
-    mySwiper.removeSlide(0);
-    mySwiper.update();
-    mySwiper.slideTo(1, 200);
-  }
-  //??change to btn-login?
+  
   $('#login-btn').on('click', function(event){
     event.preventDefault();
     event.stopPropagation();
-    console.log('clicked login');
     const queryString = `email=${$('#input-email').val()}&password=${$('#input-password').val()}`;
     $.ajax({
       url: '/user/login',
@@ -153,5 +155,5 @@ $(document).ready(function () {
     });
   });
   loadTodos();
-
+  
 });
