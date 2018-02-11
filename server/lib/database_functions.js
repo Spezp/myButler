@@ -37,7 +37,7 @@ module.exports = function (knex) {
       });
     },
 
-    inserTodosByUserId: function(userId, todoName, callback) {
+    inserTodosByUserId: function(userId, todoName) {
       // get the category id from the category table using the first 'verb' of the input field
       let getCategory = function(todoName, callback) {
         let todoItem = todoName.split(' ');
@@ -50,25 +50,22 @@ module.exports = function (knex) {
             callback(rows);
         });
       };
-  
       let todoItem = todoName.split(' ');
       categoryAction = todoItem.shift();
+      let categoryId;
       getCategory(todoName, (rows) => {
         categoryId = rows[0].id;
-        return categoryId;
-      });
-
-      knex('todos')
-      .insert({
-        item: `${todoItem}`,
-        user_id: `${userId}`,
-        category_id: `${categoryId}`,
-        date_entered: knex.fn.now(),
-        completed: 'n'
-      })
-      .asCallback(function(err) {
-          if (err) return console.error(err);
-          callback();
+        knex('todos')
+        .insert({
+          item: `${todoItem}`,
+          user_id: `${userId}`,
+          category_id: `${categoryId}`,
+          date_entered: knex.fn.now(),
+          completed: 'n'
+        })
+        .asCallback(function(err) {
+            if (err) return console.error(err);
+        });
       });
     },
 

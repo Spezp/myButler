@@ -64,11 +64,8 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
   todoRoutes.post('/', (req, res) => {
     const userId = req.session.user_id;
     const todoItem = req.body.item;
-
     if (todoItem) {
-      dataHelper.inserTodosByUserId(userId, todoItem, () => {
-        console.log(`inserted ${todoItem}, go check the database!`);
-        });
+      dataHelper.inserTodosByUserId(userId, todoItem);
     } else {
       res.status(400).json({error: 'invalid request: no todo item to insert'});
     }
