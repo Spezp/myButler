@@ -37,34 +37,38 @@ module.exports = function (knex) {
       });
     },
 
-
-    getCategory: function(searchTerm, callback) {
-      // when we figure out the API stuff, this will be here using the searchTerm, returning category
-      let category = 'books';
-      knex.select('id', 'name', 'action')
-      .from('categories')
-      .where('name', 'like', `%${category}%`)
-      .asCallback(function(err, rows) {
-          if (err) return console.error(err);
-          callback(rows);
-      });
-    },
-
     inserTodosByUserId: function(userId, todoName, callback) {
+      // get the category id from the category table using the first 'verb' of the input field
+      let getCategory = function(todoName, callback) {
+        let todoItem = todoName.split(' ');
+        categoryAction = todoItem.shift();
+        knex.select('id', 'name', 'action')
+        .from('categories')
+        .where('action', 'like', `%${categoryAction}%`)
+        .asCallback(function(err, rows) {
+            if (err) return console.error(err);
+            callback(rows);
+        });
+      };
+  
+      let todoItem = todoName.split(' ');
+      categoryAction = todoItem.shift();
       getCategory(todoName, (rows) => {
         categoryId = rows[0].id;
-        knex('todos')
-        .insert({
-          item: `${todoName}`,
-          user_id: `${userId}`,
-          category_id: `${categoryId}`,
-          date_entered: knex.fn.now(),
-          completed: 'n'
-        })
-        .asCallback(function(err) {
-            if (err) return console.error(err);
-            callback();
-        });
+        return categoryId;
+      });
+
+      knex('todos')
+      .insert({
+        item: `${todoItem}`,
+        user_id: `${userId}`,
+        category_id: `${categoryId}`,
+        date_entered: knex.fn.now(),
+        completed: 'n'
+      })
+      .asCallback(function(err) {
+          if (err) return console.error(err);
+          callback();
       });
     },
 

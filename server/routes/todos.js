@@ -66,6 +66,22 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
 
   });
 
+  // when a user clicks '+' button, will send todo item in req.body.
+  // TODO- need to change to a POST route when the action from the button is linked up
+  // this is now harcoded in the url. will have to pass it in, then insert item
+  todoRoutes.get('/:item', (req, res) => {
+    let userId = req.session.user_id;
+    let todoItem = req.params.item;
+
+    if (todoItem) {
+      dataHelper.inserTodosByUserId(userId, todoItem, () => {
+      res.send(`inserted ${todoItem}, go check the database!`);
+      })
+    } else {
+      res.status(400).json({error: 'invalid request: no todo item to insert'});
+    }
+  });
+
 
   //Font-end!! remove data-id, use data-item or item.text() in url
   todoRoutes.get('/:item', (req, res) => {
@@ -149,7 +165,6 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
   });
 
   //icon view detais??
-
 
 
   // when a user clicks edit button, will send todo id in req.body.
