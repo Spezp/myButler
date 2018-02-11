@@ -21,13 +21,16 @@ const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 const usersHelper = require('./server/lib/usersHelper')(knex);
 const dataHelper = require('./server/lib/database_functions')(knex);
+const keys        =require('./server/lib/keys');
+const btoken          =require('./server/lib/btoken');
 
 
-const prodAdv = aws.createProdAdvClient('AKIAI7R6MJ4LCG7OAPVA', 'Gtc8nuvAPOTaCQ+Xkkl8fCnIEfVwe05rFhXV0/wE',  'mybulter-20');
+
+const prodAdv = aws.createProdAdvClient(keys['1'], keys['2'], keys['3']);
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./server/routes/users")(usersHelper, bcrypt, cookieSession);
-const todoRoutes = require("./server/routes/todos")(dataHelper, https, prodAdv);
+const todoRoutes = require("./server/routes/todos")(dataHelper, https, prodAdv, btoken);
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -63,11 +66,7 @@ app.use("/todo", todoRoutes);
 
 // Home page
 app.get("/", (req, res) => {
-<<<<<<< HEAD
-  let templateVars = {};
-=======
   let templateVars ={};
->>>>>>> 8f1eeaae6de24ecf3538ac6a664694b23b64f2f9
   if (req.session.user_id) {
     templateVars = {login: true};
   } else {

@@ -4,7 +4,7 @@ const dataHelper      = require("../lib/database_functions");
 const express         = require('express');
 const todoRoutes      = express.Router();
 
-module.exports = (dataHelper, https, prodAdv) => {
+module.exports = (dataHelper, https, prodAdv, btoken) => {
 
   //overview on the home page
   //response with all todos in there category under this user
@@ -59,7 +59,7 @@ module.exports = (dataHelper, https, prodAdv) => {
   //update in db
   //send category and all its items to update display
   todoRoutes.post('/', (req, res) =>{
-    //assuming ajax data is querystring with key = text 
+    //assuming ajax data is querystring with key = text
     if (!req.body.text) {
       res.status(400).json({error: 'invalid request: no data in POST body'})
     }
@@ -71,10 +71,10 @@ module.exports = (dataHelper, https, prodAdv) => {
   todoRoutes.get('/:item', (req, res) => {
     // const item = req.params.item;
     // const category = req.body.category;
-    //const item = 'Muku';
-    //const category = 'restaurants';
-    const item = 'Star';
-    const category = 'movies';
+    const item = 'Muku';
+    const category = 'restaurants';
+    //const item = 'Star';
+    //const category = 'movies';
     //const item = 'Harry';
     //const category = 'books';
     if (category === 'restaurants') {
@@ -82,7 +82,7 @@ module.exports = (dataHelper, https, prodAdv) => {
           hostname: 'api.yelp.com',
           path: `/v3/businesses/search?term=${item}&latitude=51.044270&longitude=-114.062019&limit=2`,
           headers:{
-              Authorization: 'Bearer TsJGuoxAQeB8zt7NNM6G-bzR6ZCio2Shj0nfhZmt2J9PC0__tbHoIDb68VfN_Z1vt9rvV9DQnFSqHyAZ5BZ8SEEdUeHuqPEj_H18dCq1CRnfbjBto4h-gqgoc5h7WnYx'
+              Authorization: btoken['b']
           }
       };
       let apiResult;
