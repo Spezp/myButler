@@ -12,6 +12,8 @@ const bcrypt            =require('bcrypt');
 const methodOverride    =require('method-override');
 const app               = express();
 const https       =require('https');
+//const parseString = require('xml2js').parseString;
+const aws         =require('aws-lib');
 
 const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
@@ -21,10 +23,11 @@ const usersHelper = require('./server/lib/usersHelper')(knex);
 const dataHelper = require('./server/lib/database_functions')(knex);
 
 
+const prodAdv = aws.createProdAdvClient('AKIAI7R6MJ4LCG7OAPVA', 'Gtc8nuvAPOTaCQ+Xkkl8fCnIEfVwe05rFhXV0/wE',  'mybulter-20');
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./server/routes/users")(usersHelper, bcrypt, cookieSession);
-const todoRoutes = require("./server/routes/todos")(dataHelper, https);
+const todoRoutes = require("./server/routes/todos")(dataHelper, https, prodAdv);
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
