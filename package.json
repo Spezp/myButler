@@ -29,8 +29,7 @@
     "pg": "^6.0.2",
     "popper": "^1.0.1",
     "popper.js": "^1.12.9",
-    "swiper": "^4.1.0",
-    "xml2js": "^0.4.19"
+    "swiper": "^4.1.0"
   },
   "devDependencies": {
     "nodemon": "^1.14.12"
