@@ -73,16 +73,16 @@ module.exports = (dataHelper) => {
 
   // when a user clicks edit button, will send todo id in req.body.
   // TODO- this is now harcoded. will have to find, then update (with category or item)
-  // todoRoutes.put('/:item', (req, res) => {
-
-  // });
+  todoRoutes.put('/:item', (req, res) => {
+    let todoId = req.params.item;
+    res.sentd('todoId: ', todoId);
+  });
 
   // when a user clicks delete button, will send todo id in req.body.
   // todoRoutes.delete('/:item', (req, res) => {     // need to change to the delete route
   // TODO- this is now harcoded in the url. will have to pass it in, then delete item
   todoRoutes.get('/:item', (req, res) => {
     let todoId = req.params.item;
-    console.log('item:', todoId);
     if (todoId) {
       dataHelper.deleteIndividTodo(todoId, () => {
       res.send(`deleted ${todoId}, go check the database!`);
