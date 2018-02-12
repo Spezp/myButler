@@ -51,7 +51,7 @@ $(document).ready(function () {
     $.post("/todo", $( "#todo-textarea" ).serialize(), function () {
       console.log($("#todo-textarea").text());
 
-      loadNewTodo();
+      loadNewTodos();
     });
   });
 
@@ -65,6 +65,8 @@ $(document).ready(function () {
   };
 
   const getSlideFromCategory = (category) => {
+    console.log(category);
+    
     if (category === 'books') {
       return 1;
     } else if (category === 'movies') {
@@ -96,7 +98,10 @@ $(document).ready(function () {
       .attr("style", "display: inline");
 
     if (newTodo) {
+
       $(createTodoElement(todos)).appendTo(`#${todos.name}Table`);
+      console.log(getSlideFromCategory(todos.name), todos.action );
+      
       mySwiper.slideTo(getSlideFromCategory(todos.name));
     } else {
       todos.forEach(function (todo) {
@@ -121,8 +126,8 @@ $(document).ready(function () {
     console.log('hello');
 
     updateCategories();
-    $.getJSON("/todo/", (json) => {
-
+    $.getJSON("/todo", (json) => {
+      console.log(json);
       renderTodos(json[json.length - 1], true);
     });
   };
@@ -177,7 +182,6 @@ $(document).ready(function () {
       }
     });
   });
-  loadTodos();
 
   //select delete btn
   //on click
