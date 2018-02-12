@@ -37,7 +37,7 @@ module.exports = function (knex) {
       });
     },
 
-    inserTodosByUserId: function(userId, todoName) {
+    inserTodosByUserId: function(userId, todoName, sendResponse) {
       // get the category id from the category table using the first 'verb' of the input field
       let getCategory = function(todoName, callback) {
         let todoItem = todoName.split(' ');
@@ -52,6 +52,7 @@ module.exports = function (knex) {
       };
       let todoItem = todoName.split(' ');
       categoryAction = todoItem.shift();
+      todoItem = todoItem.join(' ');
       let categoryId;
       getCategory(todoName, (rows) => {
         categoryId = rows[0].id;
@@ -65,6 +66,7 @@ module.exports = function (knex) {
         })
         .asCallback(function(err) {
             if (err) return console.error(err);
+            sendResponse();
         });
       });
     },

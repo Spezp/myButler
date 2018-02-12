@@ -50,6 +50,7 @@ $(document).ready(function () {
     }
     $.post("/todo", $( "#todo-textarea" ).serialize(), function () {
       console.log($("#todo-textarea").text());
+
       loadNewTodo();
     });
   });
@@ -57,14 +58,14 @@ $(document).ready(function () {
   //Builds todo row and returns to render todos
   //
   const createTodoElement = function (todoDB) {
-    
+
     let template = `<tr data-id="${todoDB.id}"><td>${todoDB.item}</td><td></td><td id="data-icon"><i class="fas fa-pencil-alt"></i><a ><i class="far fa-trash-alt"></i></a></td></tr>`;
 
     return template;
   };
 
   const getSlideFromCategory = (category) => {
-    if (category === 'books') { 
+    if (category === 'books') {
       return 1;
     } else if (category === 'movies') {
       return 2;
@@ -78,7 +79,7 @@ $(document).ready(function () {
   // builds slide page navigation login
   //
   const renderTodos = (todos, newTodo) => {
-    
+
     //checks authorization
     if (!todos) {
       return null;
@@ -104,7 +105,7 @@ $(document).ready(function () {
     }
     mySwiper.update();
   };
-  
+
   let updateCategories = () => {
     $.getJSON("/todo/categories", (json) => {
 
@@ -118,10 +119,10 @@ $(document).ready(function () {
 
   let loadNewTodo = () => {
     console.log('hello');
-    
+
     updateCategories();
     $.getJSON("/todo/", (json) => {
- 
+
       renderTodos(json[json.length - 1], true);
     });
   };
@@ -157,7 +158,7 @@ $(document).ready(function () {
     });
     loadTodos();
   });
-  
+
   $('#login-btn').on('click', function(event){
     event.preventDefault();
     event.stopPropagation();
@@ -177,5 +178,9 @@ $(document).ready(function () {
     });
   });
   loadTodos();
-  
+
+  //select edit
+  //on click
+  //ajax to
+
 });
