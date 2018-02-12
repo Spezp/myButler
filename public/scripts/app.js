@@ -207,6 +207,8 @@ let template =
   });
 
 
+
+
   //Spencer, add class = trash if not used yet
   $('body').on('click', '.trash', function(event) {
     event.stopPropagation();
@@ -249,6 +251,21 @@ let template =
       data: `${newItem}&${newCatg}`
     }).done(function(response){
       mySwiper.slideTo(getSlideFromCategory(catgByNum), 100);
+    });
+  });
+
+  $('body').on('click', 'h4', function(event) {
+    event.stopPropagation();
+    const id = $(this).data('id');
+    const item = $(this).text();
+    const category = $(this).data('catg');
+    console.log(id);
+    $.ajax({
+      url: `/todo/${id}`,
+      method: 'POST',
+      data: `item=${item}&category=${category}`
+    }).done(function(response){
+
     });
   });
 
