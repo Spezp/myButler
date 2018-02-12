@@ -15,7 +15,9 @@ $(document).ready(function () {
     navigation: {
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev'
-    }
+    },
+
+    shortSwipes: false
   });
 
   // Swipe button navigation
