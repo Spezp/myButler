@@ -161,7 +161,7 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
         }
 
       if (category === 'products') {
-      prodAdv.call("ItemSearch", {SearchIndex: "Electronics", Keywords: `${item}`}, function(err, result) {
+      prodAdv.call("ItemSearch", {SearchIndex: "Appliances", Keywords: `${item}`}, function(err, result) {
         console.log(err);
         if(result['Items']['Item'].length) {
           const extraInfo = result['Items']['Item'][0]['DetailPageURL'];

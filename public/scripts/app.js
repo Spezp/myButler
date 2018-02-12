@@ -1,6 +1,57 @@
 $(document).ready(function () {
 
+  let getAPI = (catg, id, callback) => {
+    $.ajax({
+      url: `/todo/${id}`,
+      method: 'get'
+    }).done(function (response) {
+      console.log(response);
+      console.log('id ', id);
+      if( catg === 'products' || catg ==='books') {
+        let productURL = `<a href='${response.url}'><button class="btn btn-warning"'><i class="fab fa-amazon"></i>Amazon</button></a>`;
+        return callback(productURL);
+      }
+      if( catg === 'restaurants') {
+        let starRating = response.rating;
+        let yelpURL = response.url;
+        let price = response.price;
+        let address = response.address;
 
+        let restaurantsTable = 
+       `<div class="row">
+          <table>
+            <tr>
+              <td><a href="${yelpURL}"><i class="fab fa-yelp"></i></a></td>
+            </tr>
+            <tr>
+              <td><p>Address: ${address}</p></td>
+            </tr>
+            <tr>
+              <td><p>Price: ${price}</p></td>
+              <td><p>Rating:${starRating}</p></td>
+            </tr>
+          </table>
+        </div>`;
+
+        return callback(restaurantsTable);
+      }
+      if (catg === 'movies') {
+        let poster = response.poster;
+        let omdbRating = response.rating;
+
+        let omdbResponse =
+          `<div class="row">
+          <table class="col-xs-12">
+            <tr>
+              <td><img src="${poster}" height="100px" alt="poster"></img></td>
+              <td><p style="float: right">Rating:${omdbRating}</p></td>
+            </tr>
+          </table>
+        </div>`;
+        return callback(omdbResponse);
+      }
+    });
+  };
   var mySwiper = new Swiper('.swiper-container', {
     // Optional parameters
     direction: 'horizontal',
@@ -59,9 +110,9 @@ $(document).ready(function () {
 
   //Builds todo row and returns to render todos
   //
-  const createTodoElement = function (todoDB) {
+  const createTodoElement = function (todoDB, apiString) {
 let template =
-`<div class="panel panel-default" data-id="${todoDB.id}">
+`<div class="panel panel-default panel${todoDB.id}" data-id="${todoDB.id}">
     <div class="panel-heading" role="tab" id="heading${todoDB.id}">
       <h4 class="panel-title" data-id="${todoDB.id}" data-catg="${todoDB.name}">
         <a role="button" data-toggle="collapse" data-parent="#${todoDB.name}Accordion" href="#collapse${todoDB.id}" aria-expanded="false" aria-controls="collapse${todoDB.id}">
@@ -74,8 +125,8 @@ let template =
       </div>
     </div>
     <div id="collapse${todoDB.id}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading${todoDB.id}">
-      <div class="panel-body">
-        Api DATA GOES over mhaaa
+      <div class="panel-body body${todoDB.id}">
+        ${apiString}
       </div>
     </div>
   </div>`;
@@ -118,19 +169,24 @@ let template =
       .attr("style", "display: inline");
 
     if (newTodo) {
+      getAPI(todos.name, todos.id, (response) => {
+        $(createTodoElement(todos, response)).appendTo(`#${todos.name}Accordion`);
+        console.log(getSlideFromCategory(todos.name), todos.action );
+        $('.collapse').collapse();
 
-      $(createTodoElement(todos)).appendTo(`#${todos.name}Accordion`);
-      console.log(getSlideFromCategory(todos.name), todos.action );
-      $('.collapse').collapse()
+      });
 
       mySwiper.slideTo(getSlideFromCategory(todos.name));
     } else {
       todos.forEach(function (todo) {
-        $(createTodoElement(todo)).appendTo(`#${todo.name}Accordion`);
+        getAPI(todo.name, todo.id, (response) => {
+          $(createTodoElement(todo, response)).appendTo(`#${todo.name}Accordion`);
+          mySwiper.update();
+          $('.collapse').collapse();
+          
+        });
       });
     }
-    mySwiper.update();
-    $('.collapse').collapse()
   };
 
   let updateCategories = () => {
@@ -167,7 +223,7 @@ let template =
   const userAuthorized = function() {
     mySwiper.removeSlide(0);
     mySwiper.update();
-    mySwiper.slideTo(1, 200);
+    mySwiper.slideTo(0, 200);
   };
   $('#signup-btn').on('click', function(event){
     event.preventDefault();
@@ -219,27 +275,29 @@ let template =
     }).done(function(response){
       console.log('received response');
       console.log($(`div[data-id=${id}]`));
-      $(`#heading${id}`).remove();
+      $(`.panel${id}`).remove();
+      updateCategories();
     });
   });
 
-  $('body').on('click', 'h4', function(event){
+/*   $('body').on('click', 'h4', function(event){
+    event.preventDefault();
     console.log('hit h4 brn');
     const id = $(this).data('id');
     $.ajax({
       url: `/todo/${id}`,
-      method: 'get',
+      method: 'get'
     }).done(function(response){
       console.log(response);
       console.log('id ', id);
-      $(`#collapse${id}`).on('shown.bs.collapse', function () {
+      $(`#collapse${id}`).on('show.bs.collapse', function () {
         console.log('collapse');
-        $($(this).children()[0]).html('<div>hello</div>');
-    });
+        $(`<div>hello</div>`).appendTo(`.body${id}`);
+      });
     });
 
 
-  });
+  }); */
 
   $('body').on('click', '.submit', function(event) {
     event.stopPropagation();
