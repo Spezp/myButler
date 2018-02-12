@@ -51,15 +51,33 @@ $(document).ready(function () {
     $.post("/todo", $( "#todo-textarea" ).serialize(), function () {
       console.log($("#todo-textarea").text());
 
-      loadNewTodos();
+      loadNewTodo();
     });
   });
 
   //Builds todo row and returns to render todos
   //
   const createTodoElement = function (todoDB) {
-
-    let template = `<tr data-id="${todoDB.id}"><td>${todoDB.item}</td><td></td><td id="data-icon"><i class="fas fa-pencil-alt"></i><a ><i class="far fa-trash-alt"></i></a></td></tr>`;
+let template =
+`<div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="heading${todoDB.id}">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#${todoDB.name}Accordion" href="#collapse${todoDB.id}" aria-expanded="false" aria-controls="collapse${todoDB.id}">
+          ${todoDB.item}
+        </a>
+      </h4>
+      <div class="item-icons">
+      <a><i class="fas fa-pencil-alt edit"></i></a>
+      <a> <i class="far fa-trash-alt trash"></i></a>
+      </div>
+    </div>
+    <div id="collapse${todoDB.id}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading${todoDB.id}">
+      <div class="panel-body">
+        Api DATA GOES over mhaaa
+      </div>
+    </div>
+  </div>`;
+ //   let template = `<tr data-id="${todoDB.id}"><td>${todoDB.item}</td><td></td><td id="data-icon"><i class="fas fa-pencil-alt"></i><a ><i class="far fa-trash-alt"></i></a></td></tr>`;
 
     return template;
   };
@@ -69,9 +87,9 @@ $(document).ready(function () {
 
     if (category === 'books') {
       return 1;
-    } else if (category === 'movies') {
-      return 2;
     } else if (category === 'restaurants') {
+      return 2;
+    } else if (category === 'movies') {
       return 3;
     } else if (category === 'products') {
       return 4;
@@ -99,20 +117,23 @@ $(document).ready(function () {
 
     if (newTodo) {
 
-      $(createTodoElement(todos)).appendTo(`#${todos.name}Table`);
+      $(createTodoElement(todos)).appendTo(`#${todos.name}Accordion`);
       console.log(getSlideFromCategory(todos.name), todos.action );
+      $('.collapse').collapse()
 
       mySwiper.slideTo(getSlideFromCategory(todos.name));
     } else {
       todos.forEach(function (todo) {
-        $(createTodoElement(todo)).appendTo(`#${todo.name}Table`);
+        $(createTodoElement(todo)).appendTo(`#${todo.name}Accordion`);
       });
     }
     mySwiper.update();
+    $('.collapse').collapse()
   };
 
   let updateCategories = () => {
     $.getJSON("/todo/categories", (json) => {
+      console.log(json);
 
       $(`#books-badge`).text(json.books);
       $(`#dining-badge`).text(json.restaurants);
@@ -203,16 +224,19 @@ $(document).ready(function () {
   //Spencer, can i loadtodos here
   $('.edit').on('click', function() {
     const id = $($(this).parent().parent().parent()).data('id');
-    const newItem = $('').serialize();
-    const newCatg = $('').serialize();
+    const newItem = $('#newItem').serialize();
+    const catgByNum = $('#newCatg').val();
+    const newCatg = $('#newCatg').serialize();
     console.log(id);
     $.ajax({
       url: `/todo/${id}`,
       method: 'PUT',
       data: `${newItem}&${newCatg}`
     }).done(function(response){
-      loadTodos();
+      mySwiper.slideTo(getSlideFromCategory(catgByNum), 100);
     });
   });
+
+  loadTodos();
 
 });
