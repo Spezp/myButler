@@ -59,7 +59,7 @@ $(document).ready(function () {
   //
   const createTodoElement = function (todoDB) {
 let template =
-`<div class="panel panel-default">
+`<div class="panel panel-default data-id=${todoDB.id}">
     <div class="panel-heading" role="tab" id="heading${todoDB.id}">
       <h4 class="panel-title">
         <a role="button" data-toggle="collapse" data-parent="#${todoDB.name}Accordion" href="#collapse${todoDB.id}" aria-expanded="false" aria-controls="collapse${todoDB.id}">
@@ -67,8 +67,8 @@ let template =
         </a>
       </h4>
       <div class="item-icons">
-      <a><i class="fas fa-pencil-alt edit"></i></a>
-      <a> <i class="far fa-trash-alt trash"></i></a>
+      <a><i class="fas fa-pencil-alt edit" data-id=${todoDB.id}></i></a>
+      <a> <i class="far fa-trash-alt trash" data-id=${todoDB.id}></i></a>
       </div>
     </div>
     <div id="collapse${todoDB.id}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading${todoDB.id}">
@@ -206,14 +206,17 @@ let template =
 
 
   //Spencer, add class = trash if not used yet
-  $('.trash').on('click', function() {
-    const id = $($(this).parent().parent().parent()).data('id');
+  $('body').on('click', '.trash', function(event) {
+    event.stopPropagation();
+    const id = $(this).data('id');
     console.log(id);
     $.ajax({
       url: `/todo/${id}`,
       method: 'DELETE',
     }).done(function(response){
-      $(`tr[data-id=${id}]`).remove();
+      console.log('received response');
+      console.log($(`div[data-id=${id}]`));
+      $(`#heading${id}`).remove();
     });
   });
 
@@ -222,7 +225,8 @@ let template =
   //ajax to /todo/:item
   //method put
   //Spencer, can i loadtodos here
-  $('.edit').on('click', function() {
+  $('body').on('click', '.edit' function() {
+
     const id = $($(this).parent().parent().parent()).data('id');
     const newItem = $('#newItem').serialize();
     const catgByNum = $('#newCatg').val();
