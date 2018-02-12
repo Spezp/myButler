@@ -8,6 +8,20 @@
   padding-top: 97px;
 }
 
+h4 {
+  display: inline-block;
+}
+
+.item-icons {
+  text-align: right;
+  padding-left: 10px;
+  float: right;
+}
+
+#trash {
+  margin-left: 10px;
+}
+
 .swiper-slide {
   overflow-y: scroll;
 }
