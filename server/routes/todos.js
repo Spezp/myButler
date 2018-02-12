@@ -161,7 +161,7 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
   // when a user clicks edit button, will send todo id in req.body.
   // TODO- this is now harcoded. will have to find, then update (with category or item)
   // using GET for testing - TODO - need to change to put
-  todoRoutes.get('/:item', (req, res) => {
+  todoRoutes.put('/:item', (req, res) => {
     // to be deleted
     // TODO - the parameter to update will be sent in the req.body (I think??). now it's hardcoded.
     let todoId = req.params.item;
@@ -181,7 +181,7 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
   // when a user clicks delete button, will send todo id in req.body.
   // todoRoutes.delete('/:item', (req, res) => {     // need to change to the delete route
   // TODO- this is now harcoded in the url. will have to pass it in, then delete item
-  todoRoutes.get('/:item', (req, res) => {
+  todoRoutes.delete('/:item', (req, res) => {
     let todoId = req.params.item;
     if (todoId) {
       dataHelper.deleteIndividTodo(todoId, () => {
