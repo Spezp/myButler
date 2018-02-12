@@ -227,7 +227,7 @@ let template =
   //ajax to /todo/:item
   //method put
   //Spencer, can i loadtodos here
-  $('body').on('click', '.edit' function() {
+  $('body').on('click', '.edit', function() {
 
     const id = $($(this).parent().parent().parent()).data('id');
     const newItem = $('#newItem').serialize();
