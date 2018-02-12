@@ -162,19 +162,16 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
 
 
   // when a user clicks edit button, will send todo id in req.body.
-  // TODO- this is now harcoded. will have to find, then update (with category or item)
-  // using GET for testing - TODO - need to change to put
   todoRoutes.put('/:item', (req, res) => {
-    // to be deleted
-    // TODO - the parameter to update will be sent in the req.body (I think??). now it's hardcoded.
     let todoId = req.params.item;
-    let itemChange = 'read Eat Love Pray';
+    let itemChange = req.body.newItem;
+    const catgChange = req.body.newCatg;
 
     // need to use or null each parameter:
     // updateTodosByTodoId: function(todoId, itemChange, categChange, completed, callback)
     if (todoId) {
-      dataHelper.updateTodosByTodoId(todoId, itemChange, null, null, () => {
-        res.send(`updated ${todoId}, go check the database!`);
+      dataHelper.updateTodosByTodoId(todoId, itemChange, catgChange, null, () => {
+        res.json({completed: true});
       })
     } else {
      res.status(400).json({error: 'Invalid request: no todoId to update'});
@@ -182,8 +179,6 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
   });
 
   // when a user clicks delete button, will send todo id in req.body.
-  // todoRoutes.delete('/:item', (req, res) => {     // need to change to the delete route
-  // TODO- this is now harcoded in the url. will have to pass it in, then delete item
   todoRoutes.delete('/:item', (req, res) => {
     let todoId = req.params.item;
     if (todoId) {

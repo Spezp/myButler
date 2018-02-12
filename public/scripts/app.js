@@ -60,8 +60,8 @@ $(document).ready(function () {
   //Builds todo row and returns to render todos
   //
   const createTodoElement = function (todoDB) {
-let template = 
-`<div class="panel panel-default">
+let template =
+`<div class="panel panel-default data-id=${todoDB.id}">
     <div class="panel-heading" role="tab" id="heading${todoDB.id}">
       <h4 class="panel-title">
         <a role="button" data-toggle="collapse" data-parent="#${todoDB.name}Accordion" href="#collapse${todoDB.id}" aria-expanded="false" aria-controls="collapse${todoDB.id}">
@@ -69,8 +69,8 @@ let template =
         </a>
       </h4>
       <div class="item-icons">
-      <a><i class="fas fa-pencil-alt edit"></i></a>
-      <a> <i class="far fa-trash-alt trash"></i></a>
+      <a><i class="fas fa-pencil-alt edit" data-id=${todoDB.id}></i></a>
+      <a> <i class="far fa-trash-alt trash" data-id=${todoDB.id}></i></a>
       </div>
     </div>
     <div id="collapse${todoDB.id}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading${todoDB.id}">
@@ -86,7 +86,7 @@ let template =
 
   const getSlideFromCategory = (category) => {
     console.log(category);
-    
+
     if (category === 'books') {
       return 1;
     } else if (category === 'restaurants') {
@@ -122,6 +122,7 @@ let template =
       $(createTodoElement(todos)).appendTo(`#${todos.name}Accordion`);
       console.log(getSlideFromCategory(todos.name), todos.action );
       $('.collapse').collapse()
+
       mySwiper.slideTo(getSlideFromCategory(todos.name));
     } else {
       todos.forEach(function (todo) {
@@ -135,7 +136,7 @@ let template =
   let updateCategories = () => {
     $.getJSON("/todo/categories", (json) => {
       console.log(json);
-      
+
       $(`#books-badge`).text(json.books);
       $(`#dining-badge`).text(json.restaurants);
       $(`#movies-badge`).text(json.movies);
@@ -205,19 +206,43 @@ let template =
     });
   });
 
+
+  //Spencer, add class = trash if not used yet
+  $('body').on('click', '.trash', function(event) {
+    event.stopPropagation();
+    const id = $(this).data('id');
+    console.log(id);
+    $.ajax({
+      url: `/todo/${id}`,
+      method: 'DELETE',
+    }).done(function(response){
+      console.log('received response');
+      console.log($(`div[data-id=${id}]`));
+      $(`#heading${id}`).remove();
+    });
+  });
+
   //select delete btn
   //on click
   //ajax to /todo/:item
   //method put
-  //Spencer, add class = trash if not used yet
-  // $('.trash').on('click', function() {
-  //   const id = ....
-  //   $.ajax({
-  //     url: `/todo/${id}`,
-  //     method: 'DELETE',
-  //   }).done(function(response){
+  //Spencer, can i loadtodos here
+  $('body').on('click', '.edit' function() {
 
-  //   });
-  // });
+    const id = $($(this).parent().parent().parent()).data('id');
+    const newItem = $('#newItem').serialize();
+    const catgByNum = $('#newCatg').val();
+    const newCatg = $('#newCatg').serialize();
+    console.log(id);
+    $.ajax({
+      url: `/todo/${id}`,
+      method: 'PUT',
+      data: `${newItem}&${newCatg}`
+    }).done(function(response){
+      mySwiper.slideTo(getSlideFromCategory(catgByNum), 100);
+    });
+  });
+
   loadTodos();
+
 });
