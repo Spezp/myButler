@@ -69,7 +69,9 @@ let template =
         </a>
       </h4>
       <div class="item-icons">
-      <a><i class="fas fa-pencil-alt edit" data-id=${todoDB.id}></i></a>
+      <a class="collapsed" role="button" data-toggle="collapse" data-parent="#${todoDB.name}Accordion" href="#collapse${todoDB.id}" aria-expanded="false" aria-controls="collapse${todoDB.id}">
+      <i class="fas fa-pencil-alt edit" data-id=${todoDB.id}></i>
+      </a>
       <a> <i class="far fa-trash-alt trash" data-id=${todoDB.id}></i></a>
       </div>
     </div>
@@ -79,7 +81,6 @@ let template =
       </div>
     </div>
   </div>`;
- //   let template = `<tr data-id="${todoDB.id}"><td>${todoDB.item}</td><td></td><td id="data-icon"><i class="fas fa-pencil-alt"></i><a ><i class="far fa-trash-alt"></i></a></td></tr>`;
 
     return template;
   };
@@ -222,17 +223,26 @@ let template =
     });
   });
 
-  //select delete btn
-  //on click
-  //ajax to /todo/:item
-  //method put
-  //Spencer, can i loadtodos here
-  $('body').on('click', '.edit' function() {
+  $('body').on('click', '.edit', function(event){
+    event.stopPropagation();
+    console.log('hit edit brn');
+    const id = $(this).data('id');
+    const form = [
 
-    const id = $($(this).parent().parent().parent()).data('id');
+    ];
+
+    $(`#collapse${id}`).on('shown.bs.collapse', function () {
+      console.log('collapse');
+      $($(this).children()[0]).html('<div>hello</div>');
+    })
+  });
+
+  $('body').on('click', '.submit', function(event) {
+    event.stopPropagation();
+    const id = $(this).data('id');
     const newItem = $('#newItem').serialize();
-    const catgByNum = $('#newCatg').val();
     const newCatg = $('#newCatg').serialize();
+    const catgByNum = $('#newCatg').val();
     console.log(id);
     $.ajax({
       url: `/todo/${id}`,
