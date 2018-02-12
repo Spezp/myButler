@@ -79,7 +79,6 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
 
   //Font-end!! remove data-id, use data-item or item.text() in url
   todoRoutes.get('/:item', (req, res) => {
-    console.log('hit server');
     const item_id = req.params.item;
     dataHelper.getIndividTodo(item_id, (rows) => {
       let category = rows[0].name;
