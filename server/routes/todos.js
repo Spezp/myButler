@@ -157,6 +157,17 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
       });
       }
 
+      if (category === 'products') {
+      prodAdv.call("ItemSearch", {SearchIndex: "Electronics", Keywords: `${item}`}, function(err, result) {
+        console.log(err);
+        if(result['Items']['Item'].length) {
+          const extraInfo = result['Items']['Item'][0]['DetailPageURL'];
+          res.json({url: extraInfo});
+        } else {
+          res.json({msg: 'Sorry, no related product found on Amazon'})
+        }
+      });
+      }
   });
 
   //icon view detais??
