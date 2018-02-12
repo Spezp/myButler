@@ -51,14 +51,29 @@ $(document).ready(function () {
     $.post("/todo", $( "#todo-textarea" ).serialize(), function () {
       console.log($("#todo-textarea").text());
 
-      loadNewTodos();
+      loadNewTodo();
     });
   });
 
   //Builds todo row and returns to render todos
   //
   const createTodoElement = function (todoDB) {
-
+// `<div data-id="${todoDB.id}" class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+//   <div class="panel panel-default">
+//     <div class="panel-heading" role="tab" id="heading${todoDB.id}">
+//       <h4 class="panel-title">
+//         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse${todoDB.id}" aria-expanded="true" aria-controls="collapse${todoDB.id}">
+//           ${todoDB.item}
+//         </a>
+//       </h4>
+//     </div>
+//     <div id="collapse${todoDB.id}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading${todoDB.id}">
+//       <div class="panel-body">
+//         Api DATA GOES over mhaaa
+//       </div>
+//     </div>
+//   </div>
+// </div>`
     let template = `<tr data-id="${todoDB.id}"><td>${todoDB.item}</td><td></td><td id="data-icon"><i class="fas fa-pencil-alt"></i><a ><i class="far fa-trash-alt"></i></a></td></tr>`;
 
     return template;
@@ -113,7 +128,8 @@ $(document).ready(function () {
 
   let updateCategories = () => {
     $.getJSON("/todo/categories", (json) => {
-
+      console.log(json);
+      
       $(`#books-badge`).text(json.books);
       $(`#dining-badge`).text(json.restaurants);
       $(`#movies-badge`).text(json.movies);
@@ -201,5 +217,5 @@ $(document).ready(function () {
       }
     });
   });
-
+  loadTodos();
 });
