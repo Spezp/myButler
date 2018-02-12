@@ -20,9 +20,9 @@ module.exports = function (knex) {
       .join('categories', 'todos.category_id', '=', 'categories.id')
       .select('todos.id', 'todos.item', 'categories.name', 'categories.action')
       .where('todos.id', todoId)
-      .asCallback(function(err, row) {
+      .asCallback(function(err, rows) {
           if (err) return console.error(err);
-          callback(row);
+          callback(rows);
       });
     },
 
