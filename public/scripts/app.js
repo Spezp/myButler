@@ -183,8 +183,23 @@ $(document).ready(function () {
     });
   });
 
-  //select edit
+  //select delete btn
   //on click
-  //ajax to
+  //ajax to /todo/:item
+  //method put
+  //Spencer, add class = trash if not used yet
+  $('.trash').on('click', function() {
+    $.ajax({
+      url: '/todo/',
+      method: 'POST',
+      data: queryString
+    }).done(function(response){
+      if(!response.isUser) {
+        userAuthorized();
+      } else {
+        $(".warning").hide().slideDown();
+      }
+    });
+  });
 
 });
