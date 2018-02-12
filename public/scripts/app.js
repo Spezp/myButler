@@ -103,7 +103,7 @@ $(document).ready(function () {
     }
     $.post("/todo", $( "#todo-textarea" ).serialize(), function () {
       console.log($("#todo-textarea").text());
-
+      $("#todo-textarea").val('');
       loadNewTodo();
     });
   });
