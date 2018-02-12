@@ -42,7 +42,6 @@ $(document).ready(function () {
   });
 
   $("#post-todo").click( function( event ) {
-    console.log('hello')
     console.log($("#todo-textarea"))
     event.preventDefault();
     let isContent = $("#todo-textarea").val();
@@ -51,7 +50,6 @@ $(document).ready(function () {
     }
     $.post("/todo", $( "#todo-textarea" ).serialize(), function () {
       console.log($("#todo-textarea").text());
-      
       loadNewTodo();
     });
   });
@@ -59,10 +57,22 @@ $(document).ready(function () {
   //Builds todo row and returns to render todos
   //
   const createTodoElement = function (todoDB) {
-     console.log("helllo")
+    
     let template = `<tr data-id="${todoDB.id}"><td>${todoDB.item}</td><td></td><td id="data-icon"><i class="fas fa-pencil-alt"></i><a ><i class="far fa-trash-alt"></i></a></td></tr>`;
 
     return template;
+  };
+
+  const getSlideFromCategory = (category) => {
+    if (category === 'books') { 
+      return 1;
+    } else if (category === 'movies') {
+      return 2;
+    } else if (category === 'restaurants') {
+      return 3;
+    } else if (category === 'products') {
+      return 4;
+    }
   };
 
   // builds slide page navigation login
@@ -85,7 +95,8 @@ $(document).ready(function () {
       .attr("style", "display: inline");
 
     if (newTodo) {
-      $(createTodoElement(todos)).appendTo(`#${todos.name}Table`).hide().slideDown();
+      $(createTodoElement(todos)).appendTo(`#${todos.name}Table`);
+      mySwiper.slideTo(getSlideFromCategory(todos.name));
     } else {
       todos.forEach(function (todo) {
         $(createTodoElement(todo)).appendTo(`#${todo.name}Table`);
@@ -102,9 +113,12 @@ $(document).ready(function () {
       $(`#movies-badge`).text(json.movies);
       $(`#products-badge`).text(json.products);
     });
+
   };
 
   let loadNewTodo = () => {
+    console.log('hello');
+    
     updateCategories();
     $.getJSON("/todo/", (json) => {
  
