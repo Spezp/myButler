@@ -61,17 +61,15 @@ $(document).ready(function () {
   //
   const createTodoElement = function (todoDB) {
 let template =
-`<div class="panel panel-default data-id=${todoDB.id}">
+`<div class="panel panel-default" data-id="${todoDB.id}">
     <div class="panel-heading" role="tab" id="heading${todoDB.id}">
-      <h4 class="panel-title">
+      <h4 class="panel-title" data-id="${todoDB.id}">
         <a role="button" data-toggle="collapse" data-parent="#${todoDB.name}Accordion" href="#collapse${todoDB.id}" aria-expanded="false" aria-controls="collapse${todoDB.id}">
           ${todoDB.item}
         </a>
       </h4>
       <div class="item-icons">
-      <a class="collapsed" role="button" data-toggle="collapse" data-parent="#${todoDB.name}Accordion" href="#collapse${todoDB.id}" aria-expanded="false" aria-controls="collapse${todoDB.id}">
       <i class="fas fa-pencil-alt edit" data-id=${todoDB.id}></i>
-      </a>
       <a> <i class="far fa-trash-alt trash" data-id=${todoDB.id}></i></a>
       </div>
     </div>
@@ -81,6 +79,7 @@ let template =
       </div>
     </div>
   </div>`;
+   // <a class="collapsed" role="button" data-toggle="collapse" data-parent="#${todoDB.name}Accordion" href="#collapse${todoDB.id}" aria-expanded="false" aria-controls="collapse${todoDB.id}">
 
     return template;
   };
@@ -223,7 +222,7 @@ let template =
     });
   });
 
-  $('body').on('click', '.edit', function(event){
+  $('body').on('click', 'h4', function(event){
     event.stopPropagation();
     console.log('hit edit brn');
     const id = $(this).data('id');
