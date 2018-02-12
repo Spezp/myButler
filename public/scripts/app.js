@@ -63,7 +63,7 @@ $(document).ready(function () {
 let template =
 `<div class="panel panel-default" data-id="${todoDB.id}">
     <div class="panel-heading" role="tab" id="heading${todoDB.id}">
-      <h4 class="panel-title" data-id="${todoDB.id}">
+      <h4 class="panel-title" data-id="${todoDB.id}" data-catg="${todoDB.name}">
         <a role="button" data-toggle="collapse" data-parent="#${todoDB.name}Accordion" href="#collapse${todoDB.id}" aria-expanded="false" aria-controls="collapse${todoDB.id}">
           ${todoDB.item}
         </a>
@@ -209,7 +209,6 @@ let template =
 
 
 
-  //Spencer, add class = trash if not used yet
   $('body').on('click', '.trash', function(event) {
     event.stopPropagation();
     const id = $(this).data('id');
@@ -225,17 +224,21 @@ let template =
   });
 
   $('body').on('click', 'h4', function(event){
-    event.stopPropagation();
-    console.log('hit edit brn');
+    console.log('hit h4 brn');
     const id = $(this).data('id');
-    const form = [
-
-    ];
-
-    $(`#collapse${id}`).on('shown.bs.collapse', function () {
-      console.log('collapse');
-      $($(this).children()[0]).html('<div>hello</div>');
+    $.ajax({
+      url: `/todo/${id}`,
+      method: 'get',
+    }).done(function(response){
+      console.log(response);
+      console.log('id ', id);
+      $(`#collapse${id}`).on('shown.bs.collapse', function () {
+        console.log('collapse');
+        $($(this).children()[0]).html('<div>hello</div>');
     });
+    });
+
+
   });
 
   $('body').on('click', '.submit', function(event) {
@@ -254,20 +257,6 @@ let template =
     });
   });
 
-  $('body').on('click', 'h4', function(event) {
-    event.stopPropagation();
-    const id = $(this).data('id');
-    const item = $(this).text();
-    const category = $(this).data('catg');
-    console.log(id);
-    $.ajax({
-      url: `/todo/${id}`,
-      method: 'POST',
-      data: `item=${item}&category=${category}`
-    }).done(function(response){
-
-    });
-  });
 
   loadTodos();
 

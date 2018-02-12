@@ -79,83 +79,91 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
 
   //Font-end!! remove data-id, use data-item or item.text() in url
   todoRoutes.get('/:item', (req, res) => {
-    const item = req.body.item;
-    const category = req.body.category;
-
-    //const item = 'Muku';
-    //const category = 'restaurants';
-    //const item = 'Star';
-    //const category = 'movies';
-    //const item = 'Harry';
-    //const category = 'books';
-    if (category === 'restaurants') {
-      const option = {
-          hostname: 'api.yelp.com',
-          path: `/v3/businesses/search?term=${item}&latitude=51.044270&longitude=-114.062019&limit=2`,
-          headers:{
-              Authorization: btoken['b']
-          }
-      };
-      let apiResult;
-      https.get(option, function(response) {
-        response.setEncoding('utf8');
-        response.on('error', function(err){
-          res.json(err);
-        })
-        response.on('data', function (data) {
-          apiResult = data;
-        })
-        response.on('end', function(){
-          const apiResultParsed = JSON.parse(apiResult);
-          const addrArr = apiResultParsed['businesses'][0]['location']['display_address'];
-          const addr = addrArr.join(' ');
-          const extraInfo = {
-            url: apiResultParsed['businesses'][0]['url'],
-            rating: apiResultParsed['businesses'][0]['rating'],
-            address: addr,
-            price: apiResultParsed['businesses'][0]['price']
-          };
-          res.json(extraInfo);
+    console.log('hit server');
+    const item_id = req.params.item;
+    dataHelper.getIndividTodo(item_id, (rows) => {
+      let category = rows[0].name;
+      let item = rows[0].item;
+      //const item = 'Muku';
+      //const category = 'restaurants';
+      //const item = 'Star';
+      //const category = 'movies';
+      //const item = 'Harry';
+      //const category = 'books';
+      if (category === 'restaurants') {
+        const option = {
+            hostname: 'api.yelp.com',
+            path: `/v3/businesses/search?term=${item}&latitude=51.044270&longitude=-114.062019&limit=2`,
+            headers:{
+                Authorization: btoken['b']
+            }
+        };
+        let apiResult;
+        https.get(option, function(response) {
+          response.setEncoding('utf8');
+          response.on('error', function(err){
+            res.json(err);
+          })
+          response.on('data', function (data) {
+            apiResult = data;
+          })
+          response.on('end', function(){
+            const apiResultParsed = JSON.parse(apiResult);
+            const addrArr = apiResultParsed['businesses'][0]['location']['display_address'];
+            const addr = addrArr.join(' ');
+            const extraInfo = {
+              url: apiResultParsed['businesses'][0]['url'],
+              rating: apiResultParsed['businesses'][0]['rating'],
+              address: addr,
+              price: apiResultParsed['businesses'][0]['price']
+            };
+            res.json(extraInfo);
+          });
         });
-      });
-    }
-    if (category === 'movies') {
-      const option = {
-          hostname: 'www.omdbapi.com',
-          path: `/?apikey=thewdb&t=${item}`,
-      };
-      let buffer = [];
-      https.get(option, function(response) {
-        response.setEncoding('utf8');
-        response.on('error', function(err){
-          console.log(err);
-        })
-        response.on('data', function (data) {
-          buffer.push(data);
-
-        });
-        response.on('end', function(){
-          const apiResult = buffer.join('');
-          const apiResultParsed = JSON.parse(apiResult);
-          const extraInfo = {
-            rating: apiResultParsed['imdbRating'],
-            poster: apiResultParsed['Poster']
-          };
-          res.send(extraInfo);
-        });
-      });
-    }
-    if (category === 'books') {
-      prodAdv.call("ItemSearch", {SearchIndex: "Books", Keywords: `${item}`}, function(err, result) {
-        console.log(err);
-        if(result['Items']['Item'].length) {
-          const extraInfo = result['Items']['Item'][0]['DetailPageURL'];
-          res.json({url: extraInfo});
-        } else {
-          res.json({msg: 'Sorry, no related product found on Amazon'})
-        }
-      });
       }
+      if (category === 'movies') {
+        const option = {
+            hostname: 'www.omdbapi.com',
+            path: `/?apikey=thewdb&t=${item}`,
+        };
+        let buffer = [];
+        https.get(option, function(response) {
+          response.setEncoding('utf8');
+          response.on('error', function(err){
+            console.log(err);
+          })
+          response.on('data', function (data) {
+            buffer.push(data);
+
+          });
+          response.on('end', function(){
+            const apiResult = buffer.join('');
+            const apiResultParsed = JSON.parse(apiResult);
+            const extraInfo = {
+              rating: apiResultParsed['imdbRating'],
+              poster: apiResultParsed['Poster']
+            };
+            res.send(extraInfo);
+          });
+        });
+      }
+      if (category === 'books') {
+        console.log('hit books');
+        prodAdv.call("ItemSearch", {SearchIndex: "Books", Keywords: `${item}`}, function(err, result) {
+          console.log(err);
+          if(result['Items']['Item'].length) {
+            const extraInfo = result['Items']['Item'][0]['DetailPageURL'];
+            res.json({url: extraInfo});
+          } else {
+            res.json({msg: 'Sorry, no related product found on Amazon'})
+          }
+        });
+        }
+
+      });
+
+
+
 
       if (category === 'products') {
       prodAdv.call("ItemSearch", {SearchIndex: "Electronics", Keywords: `${item}`}, function(err, result) {
