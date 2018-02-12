@@ -223,14 +223,6 @@ let template =
     });
   });
 
-<<<<<<< HEAD
-  //select delete btn
-  //on click
-  //ajax to /todo/:item
-  //method put
-  //Spencer, can i loadtodos here
-  $('body').on('click', '.edit', function() {
-=======
   $('body').on('click', '.edit', function(event){
     event.stopPropagation();
     console.log('hit edit brn');
@@ -242,9 +234,8 @@ let template =
     $(`#collapse${id}`).on('shown.bs.collapse', function () {
       console.log('collapse');
       $($(this).children()[0]).html('<div>hello</div>');
-    })
+    });
   });
->>>>>>> c1d7b0a91a8a16e0615d3a8c895c2d3c60b83833
 
   $('body').on('click', '.submit', function(event) {
     event.stopPropagation();
