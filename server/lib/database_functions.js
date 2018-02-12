@@ -31,6 +31,7 @@ module.exports = function (knex) {
       .join('categories', 'todos.category_id', '=', 'categories.id')
       .select('todos.id', 'todos.item', 'categories.name', 'categories.action')
       .where('user_id', userId).andWhere('categories.name', categoryName)
+      .orderBy('todos.id', 'asc')
       .asCallback(function(err, rows) {
           if (err) return console.error(err);
           callback(rows);
