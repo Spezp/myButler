@@ -51,7 +51,7 @@ $(document).ready(function () {
     }
     $.post("/todo", $( "#todo-textarea" ).serialize(), function () {
       console.log($("#todo-textarea").text());
-      
+
       loadNewTodo();
     });
   });
@@ -68,7 +68,7 @@ $(document).ready(function () {
   // builds slide page navigation login
   //
   const renderTodos = (todos, newTodo) => {
-    
+
     //checks authorization
     if (!todos) {
       return null;
@@ -93,7 +93,7 @@ $(document).ready(function () {
     }
     mySwiper.update();
   };
-  
+
   let updateCategories = () => {
     $.getJSON("/todo/categories", (json) => {
 
@@ -107,7 +107,7 @@ $(document).ready(function () {
   let loadNewTodo = () => {
     updateCategories();
     $.getJSON("/todo/", (json) => {
- 
+
       renderTodos(json[json.length - 1], true);
     });
   };
@@ -143,7 +143,7 @@ $(document).ready(function () {
     });
     loadTodos();
   });
-  
+
   $('#login-btn').on('click', function(event){
     event.preventDefault();
     event.stopPropagation();
@@ -163,5 +163,9 @@ $(document).ready(function () {
     });
   });
   loadTodos();
-  
+
+  //select edit
+  //on click
+  //ajax to
+
 });
