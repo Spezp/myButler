@@ -79,10 +79,11 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
 
   //Font-end!! remove data-id, use data-item or item.text() in url
   todoRoutes.get('/:item', (req, res) => {
-    // const item = req.params.item;
-    // const category = req.body.category;
-    const item = 'Muku';
-    const category = 'restaurants';
+    const item = req.body.item;
+    const category = req.body.category;
+
+    //const item = 'Muku';
+    //const category = 'restaurants';
     //const item = 'Star';
     //const category = 'movies';
     //const item = 'Harry';
