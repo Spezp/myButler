@@ -47,7 +47,10 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
             fullList = fullList.concat(rows);
             dataHelper.getTodosByCatgsByUserId(user_id, "products", (rows) => {
               fullList = fullList.concat(rows);
-              res.json(fullList);
+              const fullListSorted = fullList.sort((a,b)=>{
+                return (a.id - b.id);
+              });
+              res.json(fullListSorted);
             });
           });
         });

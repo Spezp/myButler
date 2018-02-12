@@ -205,16 +205,12 @@ $(document).ready(function () {
   //method put
   //Spencer, add class = trash if not used yet
   $('.trash').on('click', function() {
+    const id = ....
     $.ajax({
-      url: '/todo/',
-      method: 'POST',
-      data: queryString
+      url: `/todo/${id}`,
+      method: 'DELETE',
     }).done(function(response){
-      if(!response.isUser) {
-        userAuthorized();
-      } else {
-        $(".warning").hide().slideDown();
-      }
+
     });
   });
   loadTodos();
