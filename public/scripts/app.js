@@ -223,7 +223,7 @@ let template =
   const userAuthorized = function() {
     mySwiper.removeSlide(0);
     mySwiper.update();
-    mySwiper.slideTo(1, 200);
+    mySwiper.slideTo(0, 200);
   };
   $('#signup-btn').on('click', function(event){
     event.preventDefault();
@@ -276,6 +276,7 @@ let template =
       console.log('received response');
       console.log($(`div[data-id=${id}]`));
       $(`.panel${id}`).remove();
+      updateCategories();
     });
   });
 
