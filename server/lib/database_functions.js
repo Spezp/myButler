@@ -85,11 +85,6 @@ module.exports = function (knex) {
     // expected arguments: todoId; itemChange as text or null; catagChange as text or null
     // completed as 't' or null; callback.
     updateTodosByTodoId: function(todoId, itemChange, categChange, completed, callback) {
-      let categoryId = knex('categories')
-        .where({
-        name: categChange,
-      }).select('id');
-
       if (itemChange) {
         knex('todos')
         .where('id', '=', todoId)
@@ -102,15 +97,20 @@ module.exports = function (knex) {
       });
       }
       if (categChange) {
-        knex('todos')
-        .where('id', '=', todoId)
-        .update({
-          category_id: categoryId
-        })
-        .asCallback(function(err) {
-          if (err) return console.error(err);
-          callback();
-      });
+        let categoryId = knex('categories')
+            .where({
+            name: categChange,
+          }).select('id');
+
+          knex('todos')
+          .where('id', '=', todoId)
+          .update({
+            category_id: categoryId
+          })
+          .asCallback(function(err) {
+            if (err) return console.error(err);
+            callback();
+        });
       }
       if (completed) {
         knex('todos')
@@ -126,25 +126,5 @@ module.exports = function (knex) {
     }
   }
 }
-
-
-// this is just testing the function works - can get rid of when use function in another file
-// inserTodosByUserId(1, 'Never mind the buzzcocks', (categoryId) => {
-// });
-
-// this is just testing the function works - can get rid of when use function in another file
-// getCategory('books', (rows) => {
-//   console.log('rows returned: ', rows);
-// });
-
-// this is just testing the function works - can get rid of when use function in another file
-
-// getTodosByCatgsByUserId('1', 'books', (rows) => {
-//   console.log('rows returned: ', rows);
-// });
-
-// getTodosAndCatgsByUserId(1, (rows) => {
-//   console.log('rows returned: ', rows);
-// });
 
 

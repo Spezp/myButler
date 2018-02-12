@@ -66,7 +66,7 @@ $(document).ready(function () {
 
   const getSlideFromCategory = (category) => {
     console.log(category);
-    
+
     if (category === 'books') {
       return 1;
     } else if (category === 'movies') {
@@ -101,7 +101,7 @@ $(document).ready(function () {
 
       $(createTodoElement(todos)).appendTo(`#${todos.name}Table`);
       console.log(getSlideFromCategory(todos.name), todos.action );
-      
+
       mySwiper.slideTo(getSlideFromCategory(todos.name));
     } else {
       todos.forEach(function (todo) {
@@ -183,18 +183,35 @@ $(document).ready(function () {
     });
   });
 
-  //select delete btn
-  //on click
-  //ajax to /todo/:item
-  //method put
+
   //Spencer, add class = trash if not used yet
   $('.trash').on('click', function() {
-    const id = ....
+    const id = $($(this).parent().parent().parent()).data('id');
+    console.log(id);
     $.ajax({
       url: `/todo/${id}`,
       method: 'DELETE',
     }).done(function(response){
+      $(`tr[data-id=${id}]`).remove();
+    });
+  });
 
+  //select delete btn
+  //on click
+  //ajax to /todo/:item
+  //method put
+  //Spencer, can i loadtodos here
+  $('.edit').on('click', function() {
+    const id = $($(this).parent().parent().parent()).data('id');
+    const newItem = $('').serialize();
+    const newCatg = $('').serialize();
+    console.log(id);
+    $.ajax({
+      url: `/todo/${id}`,
+      method: 'PUT',
+      data: `${newItem}&${newCatg}`
+    }).done(function(response){
+      loadTodos();
     });
   });
 
