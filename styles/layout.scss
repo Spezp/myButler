@@ -1,22 +1,28 @@
+
 .dropdown {
   z-index: 1001;
 }
+
 .swiper-container {
     position: static;
     height: 100%;
     padding-top: 97px;
 }
+
 h4 {
   display: inline-block;
 }
+
 .item-icons {
   text-align: right;
   padding-left: 10px;
   float: right;
 }
+
 #trash {
   margin-left: 10px;
 }
+
 .swiper-slide {
     overflow-y: scroll;
 }
