@@ -43,6 +43,7 @@ h4 {
   margin-bottom: 0;
   position: fixed;
   height: 60px;
+  background-color: #008cff;
 }
 
 .navbar-default {
@@ -62,12 +63,12 @@ h4 {
 h1 {
   font-family: 'Lily Script One', cursive;
   font-size: 1.5em;
+  color: #fff;
 }
 
 h2 {
   font-size: 3em;
   font-family: 'Lily Script One',cursive;
-  margin: 50px 0;
   color: #4b5573;
   text-align: center;
 }
@@ -85,6 +86,30 @@ p {
 
 .padding-ten {
   padding-top: 15px;
+}
+
+.jumbotron {
+  margin: 0 auto;
+  border-radius: 0;
+  text-shadow: 2px 5px #cccccc;
+}
+
+.slide-4, .slide-5, .slide-6 {
+  background-color: #fff;
+}
+
+.main-gutter {
+  width: 100%;
+}
+
+@media (min-width: 500px) {
+  .main-gutter {
+    width: 400px;
+  }
+}
+
+.panel {
+  margin-top: 15px;
 }
 
 .overview-btn {
@@ -114,7 +139,9 @@ body {
 }
 
 body h1 {
-  color: #244751;
+  color: #ffffff;
+  line-height: 0px;
+  padding-top: 4px;
 }
 
 body .slide-1 {

@@ -120,7 +120,6 @@ let template =
         </a>
       </h4>
       <div class="item-icons">
-      <i class="fas fa-pencil-alt edit" data-id=${todoDB.id}></i>
       <a> <i class="far fa-trash-alt trash" data-id=${todoDB.id}></i></a>
       </div>
     </div>
