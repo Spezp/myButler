@@ -43,10 +43,7 @@ h4 {
   margin-bottom: 0;
   position: fixed;
   height: 60px;
-<<<<<<< HEAD
-=======
   background-color: #008cff;
->>>>>>> ca552220e915c8688f2b477a433db20322dae39a
 }
 
 .navbar-default {
@@ -66,10 +63,7 @@ h4 {
 h1 {
   font-family: 'Lily Script One', cursive;
   font-size: 1.5em;
-<<<<<<< HEAD
-=======
   color: #fff;
->>>>>>> ca552220e915c8688f2b477a433db20322dae39a
 }
 
 h2 {
@@ -145,28 +139,9 @@ body {
 }
 
 body h1 {
-<<<<<<< HEAD
-  color: #244751;
-=======
   color: #ffffff;
   line-height: 0px;
   padding-top: 4px;
-}
-
-
-.row {
-  width: 100%;
-  margin-left: 0;
-}
-
-.btn-danger {
-background: #E0EAFC;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #CFDEF3, #E0EAFC);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #CFDEF3, #E0EAFC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-  height: 5em;
-  font-size: 2.5rem;
->>>>>>> ca552220e915c8688f2b477a433db20322dae39a
 }
 
 body .slide-1 {
