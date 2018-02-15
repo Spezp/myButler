@@ -57,3 +57,10 @@ A mid-term project which worked on the following skills:
 -    "popper": "^1.0.1",
 -    "popper.js": "^1.12.9",
 -    "swiper": "^4.1.0"
+
+## Screenshots
+!["Homepage"](https://github.com/Spezp/myButler/blob/master/docs/Login%20screen.png)
+!["Overview page"](https://github.com/Spezp/myButler/blob/master/docs/Overview%20page.png)
+!["Drilldown to category"](https://github.com/Spezp/myButler/blob/master/docs/Drilldown%20to%20category%20and%20item%20API%20info.png)
+!["API on click"](https://github.com/Spezp/myButler/blob/master/docs/API%20opens%20on%20click.png)
+!["Item rating info"](https://github.com/Spezp/myButler/blob/master/docs/Item%20rating%20information.png)
