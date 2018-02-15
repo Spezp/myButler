@@ -24,12 +24,6 @@ h4 {
 
 .swiper-slide {
   overflow-y: scroll;
-  margin-top: 2em;
-  background-color: #E6F4F1;
-}
-
-.slide-2 {
-  background-color: white;
 }
 
 .container-fluid {
@@ -40,36 +34,34 @@ h4 {
 
 .nav-av {
   max-height: 100%;
-  padding-top: 0.2em;
-  padding-bottom: 0.2em;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .navbar {
   z-index: 1000;
   margin-bottom: 0;
   position: fixed;
+  height: 60px;
 }
 
 .navbar-default {
   width: 100%;
-  height: 9.5em;
-  background-color: #2F4858;
-  box-shadow: 0px 6px 22px rgba(0, 0, 0, .3);
+  height: 97px;
 }
 
 .nav-row {
-  height: 90px;
+  height: 50px;
 }
 
 .col-xs-4 {
   text-align: center;
-  height: 90px;
+  height: 50px;
 }
 
 h1 {
   font-family: 'Lily Script One', cursive;
-  font-size: 5rem;
-
+  font-size: 1.5em;
 }
 
 h2 {
@@ -89,7 +81,6 @@ p {
   padding-top: 5px;
   margin-top: 2px;
   float: right;
-  font-size: 2rem;
 }
 
 .padding-ten {
@@ -123,49 +114,22 @@ body {
 }
 
 body h1 {
-  color: #D5CABD;;
+  color: #244751;
 }
 
+body .slide-1 {
+  background-color: white;
+}
+
+body .slide-2 {
+  background-color: white;
+}
+
+body .slide-3 {
+  background-color: white;
+}
 
 .row {
   width: 100%;
   margin-left: 0;
 }
-
-.btn-danger {
-background: #E0EAFC;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #CFDEF3, #E0EAFC);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #CFDEF3, #E0EAFC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-  height: 5em;
-  font-size: 2.5rem;
-}
-
-.btn-primary {
-  background: #DE6262;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to left, #FFB88C, #DE6262);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to left, #FFB88C, #DE6262); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  height: 5em;
-  font-size: 2.5rem;
-}
-
-.btn-info {
-  background: #7474BF;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to left, #348AC7, #7474BF);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to left, #348AC7, #7474BF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  height: 5em;
-  font-size: 2.5rem;
-}
-
-.btn-warning {
-  background: #B993D6;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to left, #8CA6DB, #B993D6);  /* Chrome 10-25, Safari 5.1-6 */
-  height: 5em;
-  font-size: 2.5rem;
-}
-
-.padding-ten {
-  padding-top: 1em;
-}
-
-
