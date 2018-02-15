@@ -23,7 +23,6 @@
 
 <body>
 
-<<<<<<< HEAD
     <div class="container-fluid">
         <% include partials/_nav %>
             <div class="swiper-container">
@@ -52,24 +51,6 @@
 
 
             </div>
-=======
-      <div class="container-fluid" id="bigbox">
-        <% include partials/_nav %>
-        <div class="swiper-container">
-
-          <div class="swiper-wrapper">
-            <div class="swiper-slide slide-1 slide-height" <% if (login) { %>style="display: none" <% } %> ><% include partials/_auth %></div>
-            <div class="swiper-slide slide-2 slide-height" <% if (!login) { %>style="display: none" <% } %> ><% include partials/_overview %></div>
-            <div class="swiper-slide slide-3 slide-height" <% if (!login) { %>style="display: none" <% } %> ><% include partials/_books %></div>
-            <div class="swiper-slide slide-4 slide-height" <% if (!login) { %>style="display: none" <% } %> ><% include partials/_dining %></div>
-            <div class="swiper-slide slide-5 slide-height" <% if (!login) { %>style="display: none" <% } %> ><% include partials/_movies %></div>
-            <div class="swiper-slide slide-6 slide-height" <% if (!login) { %>style="display: none" <% } %> ><% include partials/_products %></div>
-          </div>
-        <div class="swiper-pagination"></div>
-
-
-      </div>
->>>>>>> 74e61589f33cbf7fdeb18d1d592edea70769ff75
     </div>
 </body>
 
