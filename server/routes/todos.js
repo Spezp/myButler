@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const dataHelper      = require("../lib/database_functions");
 const express         = require('express');
@@ -12,7 +12,7 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
   //if log in, AJAX in app.js will receive json with key = category, value = number of items
   todoRoutes.get('/categories', (req, res) => {
     if (!req.session.user_id){
-      res.json({login: false, msg:'Please log in'});
+      res.json({login: false, msg: 'Please log in'});
     } else {
       const overview = {};
       const user_id = req.session.user_id;
@@ -34,8 +34,8 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
 
   //display all items in four categories for swipes
   todoRoutes.get('/', (req, res) => {
-     if (!req.session.user_id){
-      res.json({login: false, msg:'Please log in'});
+    if (!req.session.user_id){
+      res.json({login: false, msg: 'Please log in'});
     } else {
       let fullList = [];
       const user_id = req.session.user_id;
@@ -47,7 +47,7 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
             fullList = fullList.concat(rows);
             dataHelper.getTodosByCatgsByUserId(user_id, "products", (rows) => {
               fullList = fullList.concat(rows);
-              const fullListSorted = fullList.sort((a,b)=>{
+              const fullListSorted = fullList.sort((a, b)=>{
                 return (a.id - b.id);
               });
               res.json(fullListSorted);
@@ -83,30 +83,23 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
     dataHelper.getIndividTodo(item_id, (rows) => {
       let category = rows[0].name;
       let item = rows[0].item;
-      console.log(rows);
-      //const item = 'Muku';
-      //const category = 'restaurants';
-      //const item = 'Star';
-      //const category = 'movies';
-      //const item = 'Harry';
-      //const category = 'books';
       if (category === 'restaurants') {
         const option = {
-            hostname: 'api.yelp.com',
-            path: `/v3/businesses/search?term=${item}&latitude=51.044270&longitude=-114.062019&limit=2`,
-            headers:{
-                Authorization: btoken['b']
-            }
+          hostname: 'api.yelp.com',
+          path: `/v3/businesses/search?term=${item}&latitude=51.044270&longitude=-114.062019&limit=2`,
+          headers: {
+            Authorization: btoken['b']
+          }
         };
         let apiResult;
         https.get(option, function(response) {
           response.setEncoding('utf8');
           response.on('error', function(err){
             res.json(err);
-          })
+          });
           response.on('data', function (data) {
             apiResult = data;
-          })
+          });
           response.on('end', function(){
             const apiResultParsed = JSON.parse(apiResult);
             const addrArr = apiResultParsed['businesses'][0]['location']['display_address'];
@@ -123,15 +116,15 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
       }
       if (category === 'movies') {
         const option = {
-            hostname: 'www.omdbapi.com',
-            path: `/?apikey=thewdb&t=${item}`,
+          hostname: 'www.omdbapi.com',
+          path: `/?apikey=thewdb&t=${item}`
         };
         let buffer = [];
         https.get(option, function(response) {
           response.setEncoding('utf8');
           response.on('error', function(err){
             console.log(err);
-          })
+          });
           response.on('data', function (data) {
             buffer.push(data);
 
@@ -155,21 +148,21 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
             const extraInfo = result['Items']['Item'][0]['DetailPageURL'];
             res.json({url: extraInfo});
           } else {
-            res.json({msg: 'Sorry, no related product found on Amazon'})
+            res.json({msg: 'Sorry, no related product found on Amazon'});
           }
         });
-        }
+      }
 
       if (category === 'products') {
-      prodAdv.call("ItemSearch", {SearchIndex: "Appliances", Keywords: `${item}`}, function(err, result) {
-        console.log(err);
-        if(result['Items']['Item'].length) {
-          const extraInfo = result['Items']['Item'][0]['DetailPageURL'];
-          res.json({url: extraInfo});
-        } else {
-          res.json({msg: 'Sorry, no related product found on Amazon'})
-        }
-      });
+        prodAdv.call("ItemSearch", {SearchIndex: "Appliances", Keywords: `${item}`}, function(err, result) {
+          console.log(err);
+          if(result['Items']['Item'].length) {
+            const extraInfo = result['Items']['Item'][0]['DetailPageURL'];
+            res.json({url: extraInfo});
+          } else {
+            res.json({msg: 'Sorry, no related product found on Amazon'});
+          }
+        });
       }
     });
   });
@@ -188,9 +181,9 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
     if (todoId) {
       dataHelper.updateTodosByTodoId(todoId, itemChange, catgChange, null, () => {
         res.json({completed: true});
-      })
+      });
     } else {
-     res.status(400).json({error: 'Invalid request: no todoId to update'});
+      res.status(400).json({error: 'Invalid request: no todoId to update'});
     }
   });
 
@@ -199,8 +192,8 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
     let todoId = req.params.item;
     if (todoId) {
       dataHelper.deleteIndividTodo(todoId, () => {
-      res.send(`deleted ${todoId}, go check the database!`);
-      })
+        res.send(`deleted ${todoId}, go check the database!`);
+      });
     } else {
       res.status(400).json({error: 'invalid request: no todoId to delete'});
     }
@@ -216,4 +209,4 @@ module.exports = (dataHelper, https, prodAdv, btoken) => {
   });
 
   return todoRoutes;
-}
+};

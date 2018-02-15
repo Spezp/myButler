@@ -1,22 +1,28 @@
+
 .dropdown {
   z-index: 1001;
 }
+
 .swiper-container {
     position: static;
     height: 100%;
     padding-top: 97px;
 }
+
 h4 {
   display: inline-block;
 }
+
 .item-icons {
   text-align: right;
   padding-left: 10px;
   float: right;
 }
+
 #trash {
   margin-left: 10px;
 }
+
 .swiper-slide {
     overflow-y: scroll;
 }
@@ -38,6 +44,7 @@ h4 {
   margin-bottom: 0;
   position: fixed;
   height: 60px;
+  background-color: rgb(0, 140, 255);
 }
 .navbar-default {
   width: 100%;
@@ -55,13 +62,13 @@ h4 {
 h1 {
   font-family: 'Lily Script One', cursive;
   font-size: 1.5em;
+  color: #fff;
 }
 
 h2 {
 
   font-size: 3em;
   font-family: 'Lily Script One',cursive;
-  margin: 50px 0;
   color: #4b5573;
   text-align: center;
 
@@ -82,6 +89,31 @@ p {
   padding-top: 15px;
 }
 
+.jumbotron {
+  margin: 0 auto;
+  border-radius:0;
+  text-shadow: 2px 5px #cccccc;
+}
+
+.slide-4, .slide-5, .slide-6 {
+  background-color: #fff;
+}
+
+.main-gutter {
+  width: 100%;
+}
+
+@media (min-width: 500px) {
+    .main-gutter {
+      width: 400px;
+    }
+}
+
+.panel {
+  margin-top: 15px;
+}
+
+
 .overview-btn {
   margin: auto;
 }
@@ -101,7 +133,9 @@ body {
   background-color: #EEE;
   height: 100%;
   h1 {
-    color: #244751;
+    color: #ffffff;
+    line-height: 0px;
+    padding-top: 4px;
   }
   .slide-1 {
     background-color: rgb(255, 255, 255);

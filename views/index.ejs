@@ -1,27 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <title>Home Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+<<<<<<< HEAD
+        crossorigin="anonymous">
+=======
   crossorigin="anonymous">
+>>>>>>> 74e61589f33cbf7fdeb18d1d592edea70769ff75
     <script type="text/javascript" src="/vendor/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-  crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Lily+Script+One" rel="stylesheet">
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/vendor/swiper.css"/>
+    <link rel="stylesheet" href="/styles/vendor/swiper.css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="/scripts/swiper.js"></script>
-  </head>
+</head>
 
-    <body>
+<body>
 
+<<<<<<< HEAD
+    <div class="container-fluid">
+        <% include partials/_nav %>
+            <div class="swiper-container">
+
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide slide-1 slide-height" <% if (login) {%> style="display: none" <%} %> >
+                            <% include partials/_auth %>
+                    </div>
+                    <div class="swiper-slide slide-2 slide-height" <% if (!login) {%> style="display: none" <%} %> >
+                            <% include partials/_overview %>
+                    </div>
+                    <div class="swiper-slide slide-3 slide-height" <% if (!login) {%> style="display: none" <% } %> >
+                            <% include partials/_books %>
+                    </div>
+                    <div class="swiper-slide slide-4 slide-height" <% if (!login) {%> style="display: none" <% } %> >
+                            <% include partials/_dining %>
+                    </div>
+                    <div class="swiper-slide slide-5 slide-height" <% if (!login) {%>style="display: none" <% } %> >
+                            <% include partials/_movies %>
+                    </div>
+                    <div class="swiper-slide slide-6 slide-height" <% if (!login) {%>style="display: none" <% } %> >
+                            <% include partials/_products %>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+
+
+            </div>
+=======
       <div class="container-fluid" id="bigbox">
         <% include partials/_nav %>
         <div class="swiper-container">
@@ -38,6 +73,8 @@
 
 
       </div>
+>>>>>>> 74e61589f33cbf7fdeb18d1d592edea70769ff75
     </div>
-  </body>
+</body>
+
 </html>
