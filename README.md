@@ -1,4 +1,4 @@
-# Mid-term myButler Project
+# myButler Project
 
 myButler is a Smart TODO List.
 It is a smart, auto-categorizing todo list app. The user simply has to add the name of the todo item, and it gets put into the correct list.
@@ -6,7 +6,7 @@ Drilling down on these lists will also fire off APIs of further information abou
 
 Users are able to change a category of an item in case it was mis-categorized or could not be categorized at all.
 
-A mid-term project which worked on the following skills:
+Worked on the following skills:
 -- ES6 for server-side (Node) code
 -- ES5 for front-end code
 -- Node
